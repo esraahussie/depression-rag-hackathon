@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Day 2 evidence panel</title>
+  <style>
+    body { font-family: Segoe UI, sans-serif; background: #f4f6f8; color: #1b1f24; margin: 0; }
+    header.banner { background: #143b4a; color: white; padding: 24px 32px; }
+    main { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .query { background: white; border: 1px solid #d5dde3; margin-bottom: 28px; padding: 16px 20px; }
+    .q { font-size: 18px; font-weight: 600; }
+    .metrics { color: #4b5b66; }
+    .chunk { border-top: 1px solid #e6ebef; padding: 12px 0; }
+    .chunk.relevant { border-left: 4px solid #2e7d4f; padding-left: 12px; }
+    .chunk.gated { border-left: 4px solid #8a6d3b; padding-left: 12px; }
+    .rank, .score, .tag { margin-right: 10px; font-size: 13px; }
+    .score { font-weight: 700; }
+    .meta { color: #4b5b66; font-size: 13px; }
+    .excerpt { white-space: pre-wrap; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <header class="banner">
+    <h1>Evidence panel — before generation</h1>
+    <p>Best setup: chunk 900 chars / 13% overlap · semantic search · Top-5 shown</p>
+    <p>Mean Precision@3 = 0.81 · Mean Precision@5 = 0.70 · Mean Top-1 cosine = 0.68 · Gate = 0.53</p>
+  </header>
+  <main>
+    
+        <section class="query">
+          <h2>Q01 · direct</h2>
+          <p class="q">What are the core diagnostic symptoms of major depressive disorder?</p>
+          <p class="metrics">Precision@3 = 1.00 · Precision@5 = 1.00</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.57</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Appendix: Assessing depression and its severity ·
+                Page 36
+                · relevant
+              </p>
+              <p class="excerpt">In this guideline, the assessment of depression is based on the criteria in DSM-IV.
+Assessment should include the number and severity of symptoms, duration of the current
+episode, and the course of the illness.
+Key symptoms:
+• persistent sadness or low mood and/or
+• marked loss of interests or pleasure.
+At least one of these, most days, most of the time for at least 2 weeks.
+If any of above present, ask about associated symptoms:
+• disturbed sleep (decreased or increased compared to usual)
+• dec</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.56</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Context ·
+                Page 39
+                · relevant
+              </p>
+              <p class="excerpt">classification system requires at least 4 out of 10 depressive symptoms, whereas the DSM
+IV system requires at least 5 out of 9 for a diagnosis of major depression (referred to in
+this guideline as &#x27;depression&#x27;). Symptoms should be present for at least 2 weeks and each
+symptom should be present at sufficient severity for most of every day. Both diagnostic
+systems require at least 1 (DSM IV) or 2 (ICD 10) key symptoms (low mood [in both ICD 10
+and DSM IV], loss of interest and pleasure [in both I</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.63</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Recommendations ·
+                Page 7
+                · relevant
+              </p>
+              <p class="excerpt">Definitions of depression and severity
+Depression refers to a wide range of mental health problems characterised by the
+absence of a positive affect (a loss of interest and enjoyment in ordinary things and
+experiences), low mood and a range of associated emotional, cognitive, physical and
+behavioural symptoms. For more detail, see the International Classification of
+Diseases-11 (ICD-11) or the Diagnostic and Statistical Manual of Mental Disorders-5
+(DSM-5)
+criteria for depression.
+Depression sev</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.63</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Depression ·
+                Page 85
+                · relevant
+              </p>
+              <p class="excerpt">• beliefs of low self-worth or excessive or inappropriate guilt
+• hopelessness about the future
+• recurrent thoughts of death or suicidal ideation or evidence of attempted suicide
+• significantly disrupted sleep or excessive sleep
+• significant changes in appetite or weight
+• psychomotor agitation or retardation
+• reduced energy or fatigue
+In DSM-5 depression is defined as the presence of 5 or more symptoms from a list of
+9 symptoms, during the same 2-week period and where at least 1 of the symp</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.60</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf ·
+                NG134 ·
+                Section Context ·
+                Page 44
+                · relevant
+              </p>
+              <p class="excerpt">This guideline covers the identification and treatment of depression in children (5 to
+11 years) and young people (12 to 18 years) in primary, community and secondary care.
+Depression is a broad diagnosis that can include different symptoms in different people.
+However, depressed mood or loss of pleasure in most activities, are key signs of
+depression. Depressive symptoms are frequently accompanied by symptoms of anxiety,
+but may also occur on their own.
+The International Statistical Classificat</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q02 · direct</h2>
+          <p class="q">What treatment options are effective for depression, including medication and therapy?</p>
+          <p class="metrics">Precision@3 = 0.67 · Precision@5 = 0.60</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.63</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section 1.10 Chronic depressive symptoms ·
+                Page 69
+                · relevant
+              </p>
+              <p class="excerpt">Be aware that people presenting with chronic depressive symptoms may not
+1.10.1
+have sought treatment for depression previously and may be unaware that they
+have depression. Discussions about their mood and symptoms initiated by a
+healthcare practitioner may help them access treatment and services. See the
+visual summary on treatment for chronic depression. [2022]
+For people who present with chronic depressive symptoms that significantly
+1.10.2
+impair personal and social functioning and who have</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.63</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Treatment for a new episode of less severe depression ·
+                Page 97
+                · relevant
+              </p>
+              <p class="excerpt">advised that selective serotonin reuptake inhibitors (SSRIs) would be the preferred
+antidepressants to use in people with less severe depression because of their safety and
+tolerability. The committee discussed that as the evidence suggested that some
+psychological therapies were more effective than antidepressants and due to the potential
+for side effects, medication should not be the default treatment for people with less severe
+depression, unless it was the person&#x27;s preference to take antidep</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.63</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section 6 First-line treatment of less severe depression ·
+                Page 90
+                · not-relevant
+              </p>
+              <p class="excerpt">Is peer support an effective and cost-effective treatment in improving outcomes, including
+symptoms, personal and social functioning and quality of life in adults as a stand-alone
+treatment in people with less severe depression and as an adjunct to other evidencebased treatments in more severe depression?
+What are the mechanisms of action of effective psychological treatments for acute
+episodes of depression in adults? (This question is applicable to less severe and more
+severe depression.)
+For </p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.62</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf ·
+                NG134 ·
+                Section and psychodynamic psychotherapy ·
+                Page 34
+                · not-relevant
+              </p>
+              <p class="excerpt">What is the clinical and cost effectiveness, post-treatment and at longer-term follow-up,
+of family therapy, psychodynamic psychotherapy and interpersonal psychotherapy for
+adolescents (IPT-A) compared with each other and with individual CBT in young people
+aged 12 to 18 years with moderate to severe depression? [2019]
+For a short explanation of why the committee made the recommendation for research,
+see the rationale on treatments for moderate to severe depression.
+Full details of the evidence </p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.62</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section 1.10 Chronic depressive symptoms ·
+                Page 71
+                · relevant
+              </p>
+              <p class="excerpt">psychological therapy; this should be done by trained volunteers, typically
+with at least weekly contact for between 2 to 6 months
+• a rehabilitation programme, if their depression has led to loss of work or their
+withdrawing from social activities over the longer term. [2009, amended
+2022]
+For people with no or limited response to treatment for chronic depressive
+1.10.8
+symptoms that significantly impair personal and social functioning who have not
+responded to the treatments recommended in the</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q03 · direct</h2>
+          <p class="q">How is depression severity measured or screened in clinical settings?</p>
+          <p class="metrics">Precision@3 = 1.00 · Precision@5 = 1.00</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.74</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                screening-depression-suicide-risk-children-final-recommendation.pdf ·
+                - ·
+                Section Supporting Evidence ·
+                Page 6
+                · relevant
+              </p>
+              <p class="excerpt">USPSTF did not identify any studies that used the most common
+screening instrument in clinical practice, the PHQ-9.1 The Center for
+Epidemiologic Studies Depression Scale (2 included studies) is also
+used for screening in practice but does not include items that assess suicidality.1 Each screening instrument was assessed in only 1
+or 2 studies, and results varied by screening instrument and threshold. For studies assessing accuracy of depression screening instruments, sensitivity ranged from 0.5</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.69</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                depression-suicide-risk-adults-rs.pdf ·
+                - ·
+                Section Supporting Evidence ·
+                Page 6
+                · relevant
+              </p>
+              <p class="excerpt">Accuracy of Screening Tests
+The USPSTF examined evidence on the most widely used or recommended screening tools for depression: PHQ, any version; CES-D;
+EPDS for perinatal persons; and GDS for older adults.1,58
+The USPSTF found 14 primary studies (n = 8819) and 10 existing systematic reviews (n ≈ 75 000) on accuracy of screening tests
+for detecting depression.1,58 The existing systematic reviews assessed different versions of the PHQ, 2- and 3-item Whooley screening questions, CES-D, and EPDS.1,</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.67</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                screening-depression-suicide-risk-children-final-recommendation.pdf ·
+                - ·
+                Section Practice Considerations ·
+                Page 4
+                · relevant
+              </p>
+              <p class="excerpt">engagement with mental health services, adverse childhood experiences can result in high levels of unmet need in Black youth.13-17
+Similar patterns of historic trauma, adverse childhood experiences, and substance abuse may also explain higher rates of mental health disorders in Native American/Alaska Native youth.18
+Screening Tests
+Screening instruments for depression are based on either patient or
+caregiver reporting. Depression screening instruments typically assess common symptoms related to </p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.65</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Recommendations ·
+                Page 7
+                · relevant
+              </p>
+              <p class="excerpt">Definitions of depression and severity
+Depression refers to a wide range of mental health problems characterised by the
+absence of a positive affect (a loss of interest and enjoyment in ordinary things and
+experiences), low mood and a range of associated emotional, cognitive, physical and
+behavioural symptoms. For more detail, see the International Classification of
+Diseases-11 (ICD-11) or the Diagnostic and Statistical Manual of Mental Disorders-5
+(DSM-5)
+criteria for depression.
+Depression sev</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.63</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                depression-suicide-risk-adults-rs.pdf ·
+                - ·
+                Section Practice Considerations ·
+                Page 3
+                · relevant
+              </p>
+              <p class="excerpt">Screening instruments for suicide risk include the Beck Hopelessness Scale, the SAD PERSONS Scale (Sex, Age, Depression,
+Previous attempt, Ethanol abuse, Rational thinking loss, Social supports lacking, Organized plan, No spouse, Sickness), and the SAFE-T
+(Suicide Assessment Five-step Evaluation and Triage).1 Some depression screening instruments, such as the PHQ-9, incorporate
+questions that ask about suicidal ideation.1</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q04 · paraphrased</h2>
+          <p class="q">What signs mean an adult has clinical depression rather than ordinary sadness?</p>
+          <p class="metrics">Precision@3 = 0.67 · Precision@5 = 0.60</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.65</span>
+                <span class="tag">WHO</span>
+              </header>
+              <p class="meta">
+                WHOEMMNH219E-eng.pdf ·
+                WHO-EM/MNH/219/E ·
+                Section Common signs and symptoms of depression ·
+                Page 2
+                · relevant
+              </p>
+              <p class="excerpt">Depression has both mental and physical
+symptoms. It can be mild or severe to the point
+that one feels the life is not worth living any
+more, and at its worst it can lead to suicide.
+Mental
+symptoms
+include
+unhappiness,
+loneliness, hopelessness, losing interest in
+the things you used to enjoy, feeling tearful,
+feeling guilty or worthless, low self-esteem,
+slower thinking, forgetfulness, difficulty in
+concentration, thoughts of self-harm and
+suicide.
+Physical symptoms include constantly feeling
+a</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.61</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-pdf-58302785221.pdf ·
+                QS8 ·
+                Section Suspected depression ·
+                Page 7
+                · not-relevant
+              </p>
+              <p class="excerpt">A healthcare professional suspects that an adult has depression based on clinical
+judgement or if the adult answers &#x27;yes&#x27; to either of the following questions used to initially
+identify depression:
+• During the last month, have you been bothered by feeling down, depressed or
+hopeless?
+• During the last month, have you often been bothered by having little interest or
+pleasure in doing things?
+[Adapted from NICE&#x27;s guideline on depression in adults, recommendations 1.2.1 to 1.2.3
+and terms used in </p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.60</span>
+                <span class="tag">WHO</span>
+              </header>
+              <p class="meta">
+                WHOEMMNH219E-eng.pdf ·
+                WHO-EM/MNH/219/E ·
+                Section DEPRESSION ·
+                Page 2
+                · relevant
+              </p>
+              <p class="excerpt">Depression is the presence of persistent sadness
+and a loss of interest in activities that you
+normally enjoy, accompanied by an inability to
+carry out daily activities, for at least two weeks.
+It is difef rent from the usual mood fluctuations
+or temporary sadness in response to challenges
+in everyday life.
+It is a common illness; more than 300 million
+people are living with depression all around the
+world.
+It can happen to anybody and begin at any time.
+It may happen only once or it may be recu</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.60</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Recommendations ·
+                Page 7
+                · relevant
+              </p>
+              <p class="excerpt">Definitions of depression and severity
+Depression refers to a wide range of mental health problems characterised by the
+absence of a positive affect (a loss of interest and enjoyment in ordinary things and
+experiences), low mood and a range of associated emotional, cognitive, physical and
+behavioural symptoms. For more detail, see the International Classification of
+Diseases-11 (ICD-11) or the Diagnostic and Statistical Manual of Mental Disorders-5
+(DSM-5)
+criteria for depression.
+Depression sev</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.59</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf ·
+                NG134 ·
+                Section Context ·
+                Page 44
+                · not-relevant
+              </p>
+              <p class="excerpt">This guideline covers the identification and treatment of depression in children (5 to
+11 years) and young people (12 to 18 years) in primary, community and secondary care.
+Depression is a broad diagnosis that can include different symptoms in different people.
+However, depressed mood or loss of pleasure in most activities, are key signs of
+depression. Depressive symptoms are frequently accompanied by symptoms of anxiety,
+but may also occur on their own.
+The International Statistical Classificat</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q05 · paraphrased</h2>
+          <p class="q">What should a clinician try next if antidepressant tablets alone are not helping?</p>
+          <p class="metrics">Precision@3 = 0.67 · Precision@5 = 0.40</p>
+          
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.64</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Choice of antidepressants ·
+                Page 20
+                · not-relevant
+              </p>
+              <p class="excerpt">hyponatraemia, especially in older people)
+• that there is no evidence as yet supporting the use of specific
+antidepressants for patients with particular chronic physical health problems
+• interactions with other medications.
+When an antidepressant is to be prescribed, be aware of drug interactions and:
+1.5.2.2
+• refer to appendix 1 of the BNF and the table of interactions in appendix 16 of
+the full guideline for information
+• seek specialist advice if there is uncertainty
+• if necessary, refer </p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.62</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section 1.9 Further-line treatment ·
+                Page 65
+                · relevant
+              </p>
+              <p class="excerpt">If a person&#x27;s depression has not responded at all after 4 weeks of antidepressant
+1.9.1
+medication at a recognised therapeutic dose, or after 4 to 6 weeks for
+psychological therapy or combined medication and psychological therapy,
+discuss with them:
+• whether there are any personal, social or environmental factors or physical or
+other mental health conditions that might explain why the treatment is not
+working
+• whether they have had problems adhering to the treatment plan (for
+example, stopping</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.59</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section 1.10 Chronic depressive symptoms ·
+                Page 70
+                · relevant
+              </p>
+              <p class="excerpt">• has a focus on chronic depressive symptoms
+• covers related maintaining processes, including avoidance, rumination and
+interpersonal difficulties. [2022]
+For people who have had, or are still receiving, treatment for depression and who
+1.10.4
+present with chronic depressive symptoms, see the recommendations on furtherline treatment. [2022]
+If a person with chronic depressive symptoms that significantly impair personal
+1.10.5
+and social functioning cannot tolerate a particular SSRI, consider tr</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.59</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Failure of treatment to provide benefit ·
+                Page 25
+                · not-relevant
+              </p>
+              <p class="excerpt">• response is still not adequate or
+• there are side effects or
+• the patient prefers to change treatment.
+When switching from 1 antidepressant to another, be aware of:
+1.5.2.27
+• the need for gradual and modest incremental increases in dose
+• interactions between antidepressants
+• the risk of serotonin syndrome (features include confusion, delirium,
+shivering, sweating, changes in blood pressure and myoclonus) when
+combinations of serotonergic antidepressants are prescribed.
+If an antidepressan</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.59</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Stopping antidepressant medication ·
+                Page 18
+                · not-relevant
+              </p>
+              <p class="excerpt">Advise people taking antidepressant medication to talk with the person who
+1.4.12
+prescribed their medication (for example, their primary healthcare or mental
+health professional) if they want to stop taking it. Explain that it is usually
+necessary to reduce the dose in stages over time (called &#x27;tapering&#x27;) but that most
+people stop antidepressants successfully. [2022]
+Advise people taking antidepressant medication that if they stop taking it
+1.4.13
+abruptly, miss doses or do not take a full dose</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q06 · paraphrased</h2>
+          <p class="q">How do clinicians decide whether depression is mild, moderate or severe?</p>
+          <p class="metrics">Precision@3 = 1.00 · Precision@5 = 1.00</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.63</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Recommendations ·
+                Page 6
+                · relevant
+              </p>
+              <p class="excerpt">The following guidance is based on the best available evidence. The full guideline gives
+details of the methods and the evidence used to develop the guidance.
+Box 1 Depression definitions (taken from DSM-IV)
+Subthreshold depressive symptoms: Fewer than 5 symptoms of depression.
+Mild depression: Few, if any, symptoms in excess of the 5 required to make the
+diagnosis, and symptoms result in only minor functional impairment.
+Moderate depression: Symptoms of functional impairment are between &#x27;mild&#x27; </p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.63</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Recommendations ·
+                Page 7
+                · relevant
+              </p>
+              <p class="excerpt">Definitions of depression and severity
+Depression refers to a wide range of mental health problems characterised by the
+absence of a positive affect (a loss of interest and enjoyment in ordinary things and
+experiences), low mood and a range of associated emotional, cognitive, physical and
+behavioural symptoms. For more detail, see the International Classification of
+Diseases-11 (ICD-11) or the Diagnostic and Statistical Manual of Mental Disorders-5
+(DSM-5)
+criteria for depression.
+Depression sev</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.60</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf ·
+                NG134 ·
+                Section Context ·
+                Page 44
+                · relevant
+              </p>
+              <p class="excerpt">This guideline covers the identification and treatment of depression in children (5 to
+11 years) and young people (12 to 18 years) in primary, community and secondary care.
+Depression is a broad diagnosis that can include different symptoms in different people.
+However, depressed mood or loss of pleasure in most activities, are key signs of
+depression. Depressive symptoms are frequently accompanied by symptoms of anxiety,
+but may also occur on their own.
+The International Statistical Classificat</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.59</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf ·
+                NG134 ·
+                Section Making choices about treatments ·
+                Page 40
+                · relevant
+              </p>
+              <p class="excerpt">As for mild depression, the committee agreed that children and young people and their
+families or carers should be empowered to take part in shared decision making. Healthcare
+professional should also think about a number of key factors, including history, individual
+circumstances, comorbidities and developmental level and maturity.</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.59</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Appendix: Assessing depression and its severity ·
+                Page 38
+                · relevant
+              </p>
+              <p class="excerpt">Subthreshold depressive symptoms: Fewer than 5 symptoms of depression.
+Mild depression: Few, if any, symptoms in excess of the 5 required to make the diagnosis,
+and symptoms result in only minor functional impairment.
+Moderate depression: Symptoms or functional impairment are between &#x27;mild&#x27; and &#x27;severe&#x27;.
+Severe depression: Most symptoms, and the symptoms markedly interfere with
+functioning. Can occur with or without psychotic features.</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q07 · abbreviation</h2>
+          <p class="q">What is PHQ-9 used for in depression care?</p>
+          <p class="metrics">Precision@3 = 1.00 · Precision@5 = 0.80</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.74</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                screening-depression-suicide-risk-children-final-recommendation.pdf ·
+                - ·
+                Section Supporting Evidence ·
+                Page 6
+                · relevant
+              </p>
+              <p class="excerpt">USPSTF did not identify any studies that used the most common
+screening instrument in clinical practice, the PHQ-9.1 The Center for
+Epidemiologic Studies Depression Scale (2 included studies) is also
+used for screening in practice but does not include items that assess suicidality.1 Each screening instrument was assessed in only 1
+or 2 studies, and results varied by screening instrument and threshold. For studies assessing accuracy of depression screening instruments, sensitivity ranged from 0.5</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.64</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                screening-depression-suicide-risk-children-final-recommendation.pdf ·
+                - ·
+                Section Practice Considerations ·
+                Page 4
+                · relevant
+              </p>
+              <p class="excerpt">engagement with mental health services, adverse childhood experiences can result in high levels of unmet need in Black youth.13-17
+Similar patterns of historic trauma, adverse childhood experiences, and substance abuse may also explain higher rates of mental health disorders in Native American/Alaska Native youth.18
+Screening Tests
+Screening instruments for depression are based on either patient or
+caregiver reporting. Depression screening instruments typically assess common symptoms related to </p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.62</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                depression-suicide-risk-adults-rs.pdf ·
+                - ·
+                Section Supporting Evidence ·
+                Page 6
+                · relevant
+              </p>
+              <p class="excerpt">Accuracy of Screening Tests
+The USPSTF examined evidence on the most widely used or recommended screening tools for depression: PHQ, any version; CES-D;
+EPDS for perinatal persons; and GDS for older adults.1,58
+The USPSTF found 14 primary studies (n = 8819) and 10 existing systematic reviews (n ≈ 75 000) on accuracy of screening tests
+for detecting depression.1,58 The existing systematic reviews assessed different versions of the PHQ, 2- and 3-item Whooley screening questions, CES-D, and EPDS.1,</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.57</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section More severe depression ·
+                Page 86
+                · not-relevant
+              </p>
+              <p class="excerpt">More severe depression encompasses moderate and severe depression, and in this
+guideline was defined as depression scoring 16 or more on the PHQ-9 scale.</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.54</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                depression-suicide-risk-adults-rs.pdf ·
+                - ·
+                Section Practice Considerations ·
+                Page 3
+                · relevant
+              </p>
+              <p class="excerpt">Screening instruments for suicide risk include the Beck Hopelessness Scale, the SAD PERSONS Scale (Sex, Age, Depression,
+Previous attempt, Ethanol abuse, Rational thinking loss, Social supports lacking, Organized plan, No spouse, Sickness), and the SAFE-T
+(Suicide Assessment Five-step Evaluation and Triage).1 Some depression screening instruments, such as the PHQ-9, incorporate
+questions that ask about suicidal ideation.1</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q08 · abbreviation</h2>
+          <p class="q">When should SSRIs be offered for depression in adults?</p>
+          <p class="metrics">Precision@3 = 0.67 · Precision@5 = 0.60</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.71</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Treatment for a new episode of less severe depression ·
+                Page 97
+                · relevant
+              </p>
+              <p class="excerpt">advised that selective serotonin reuptake inhibitors (SSRIs) would be the preferred
+antidepressants to use in people with less severe depression because of their safety and
+tolerability. The committee discussed that as the evidence suggested that some
+psychological therapies were more effective than antidepressants and due to the potential
+for side effects, medication should not be the default treatment for people with less severe
+depression, unless it was the person&#x27;s preference to take antidep</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.65</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Table 1 ·
+                Page 44
+                · relevant
+              </p>
+              <p class="excerpt">|Treatment|How is this delivered?|Key features|Other things to think&lt;br&gt;about|
+|---|---|---|---|
+|Selective&lt;br&gt;serotonin&lt;br&gt;reuptake&lt;br&gt;inhibitors&lt;br&gt;(SSRIs)|• A review, usually within&lt;br&gt;2weeks, to check the&lt;br&gt;person&#x27;s symptoms are&lt;br&gt;improving and for side&lt;br&gt;effects.&lt;br&gt;• A review 1week after&lt;br&gt;starting antidepressant&lt;br&gt;medication if a new&lt;br&gt;prescription is for a&lt;br&gt;person aged18 to&lt;br&gt;25years or if there is a&lt;br&gt;particular concern for&lt;br&gt;risk of suicide.&lt;br&gt;• Typically taken for at&lt;br&gt;le</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.65</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                depression-suicide-risk-adults-rs.pdf ·
+                - ·
+                Section Practice Considerations ·
+                Page 5
+                · not-relevant
+              </p>
+              <p class="excerpt">therapy or brief psychosocial counseling), alone or in combination.1
+Clinicians are encouraged to consider the unique balance of benefits and harms in the perinatal period when deciding the best treatment for depression for a pregnant or breastfeeding person.
+Implementation
+Adequate systems and clinical staff are needed to ensure that patients are screened and, if they screen positive, are appropriately diagnosed and treated with evidence-based care or referred to a setting that can provide the </p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.63</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Choice of antidepressants ·
+                Page 20
+                · not-relevant
+              </p>
+              <p class="excerpt">hyponatraemia, especially in older people)
+• that there is no evidence as yet supporting the use of specific
+antidepressants for patients with particular chronic physical health problems
+• interactions with other medications.
+When an antidepressant is to be prescribed, be aware of drug interactions and:
+1.5.2.2
+• refer to appendix 1 of the BNF and the table of interactions in appendix 16 of
+the full guideline for information
+• seek specialist advice if there is uncertainty
+• if necessary, refer </p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.62</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section 1.10 Chronic depressive symptoms ·
+                Page 70
+                · relevant
+              </p>
+              <p class="excerpt">• has a focus on chronic depressive symptoms
+• covers related maintaining processes, including avoidance, rumination and
+interpersonal difficulties. [2022]
+For people who have had, or are still receiving, treatment for depression and who
+1.10.4
+present with chronic depressive symptoms, see the recommendations on furtherline treatment. [2022]
+If a person with chronic depressive symptoms that significantly impair personal
+1.10.5
+and social functioning cannot tolerate a particular SSRI, consider tr</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q09 · abbreviation</h2>
+          <p class="q">What does MDD mean and how is it diagnosed?</p>
+          <p class="metrics">Precision@3 = 1.00 · Precision@5 = 0.60</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.71</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                depression-suicide-risk-adults-rs.pdf ·
+                - ·
+                Section Importance ·
+                Page 2
+                · relevant
+              </p>
+              <p class="excerpt">Major depressive disorder (MDD), a common mental disorder in
+the US, can have a substantial impact on the lives of affected
+individuals.1,2 If left untreated, MDD can interfere with daily functioning and can be associated with an increased risk of cardiovascular events, exacerbation of comorbid conditions, or increased
+mortality.1,3-5 In 2019, 7.8% (19.4 million) of adults in the US experienced at least 1 major depressive episode; 5.3% (13.1 million) experienced a major depressive episode with s</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.68</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                depression-suicide-risk-adults-rs.pdf ·
+                - ·
+                Section Practice Considerations ·
+                Page 2
+                · relevant
+              </p>
+              <p class="excerpt">Patient Population Under Consideration
+This recommendation applies to adults 19 years or older who do not
+have a diagnosed mental health disorder or recognizable signs or
+symptoms of depression or suicide risk. Older adults are defined as
+those 65 years or older. This recommendation focuses on screening for MDD and does not address screening for other depressive
+disorders, such as minor depression or dysthymia.
+Condition Definitions
+The Diagnostic and Statistical Manual of Mental Disorders (Fift</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.62</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                depression-suicide-risk-adults-rs.pdf ·
+                - ·
+                Section Practice Considerations ·
+                Page 4
+                · relevant
+              </p>
+              <p class="excerpt">|Why is this&lt;br&gt;recommendation&lt;br&gt;and topic important?|MDD is a common disorder in the US that can have a substantial impact on an individual’s life. Depression is common in&lt;br&gt;postpartum and pregnant persons and affects both the birthing parent and infant. Suicide is the 10th-leading cause of&lt;br&gt;death in US adults.|
+|What are other&lt;br&gt;relevant USPSTF&lt;br&gt;recommendations?|• Screening for anxiety disorders in adults&lt;br&gt;• Preventive counseling interventions for perinatal depression&lt;br&gt;• Information</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.60</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                screening-depression-suicide-risk-children-final-recommendation.pdf ·
+                - ·
+                Section Importance ·
+                Page 2
+                · not-relevant
+              </p>
+              <p class="excerpt">Depression is a leading cause of disability in the US. Children and adolescents with depression typically have functional impairments in
+their performance at school or work, as well as in their interactions
+with their families and peers. Depression can also negatively affect
+the developmental trajectories of affected youth. Major depressive disorder (MDD) in children and adolescents is strongly associated with recurrent depression in adulthood; other mental disorders; and increased risk for suic</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.57</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-children-and-young-people-pdf-2098673428165.pdf ·
+                QS48 ·
+                Section Severe depression ·
+                Page 12
+                · not-relevant
+              </p>
+              <p class="excerpt">ICD-10 classification of mental and behavioural disorders describes severe depression as
+7 or more depressive symptoms, with or without psychotic symptoms.</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q10 · abbreviation</h2>
+          <p class="q">What does NICE NG222 recommend for treating depression in adults?</p>
+          <p class="metrics">Precision@3 = 1.00 · Precision@5 = 1.00</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.76</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Depression in adults: treatment and management ·
+                Page 1–5
+                · relevant
+              </p>
+              <p class="excerpt">NICE guideline
+Published: 29 June 2022
+
+This guideline replaces CG90.
+This guideline partially replaces CG123.
+This guideline is the basis of QS8.</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.74</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Overview ·
+                Page 5
+                · relevant
+              </p>
+              <p class="excerpt">This guideline covers identifying, treating and managing depression in people aged 18 and
+over. It recommends treatments for first episodes of depression, further-line treatments,
+and provides advice on preventing relapse and managing chronic depression, psychotic
+depression and depression with a coexisting diagnosis of personality disorder.
+NICE has also produced a guideline on depression in adults with a chronic physical health
+problem.
+Who is it for?
+• Healthcare professionals
+• Other profess</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.70</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Treatment for a new episode of less severe depression ·
+                Page 97
+                · relevant
+              </p>
+              <p class="excerpt">average, at improving the symptoms of less severe depression. However, the committee
+recognised that these treatments may be helpful for some people and so included them as
+options as well.
+The committee provided details of the treatments in a table to allow a discussion between
+healthcare professionals and people with depression about treatment options. Apart from
+the advice to use guided self-help first for pragmatic reasons, this table is arranged in
+order of the committee&#x27;s consensus on the </p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.69</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Update information ·
+                Page 110–111
+                · relevant
+              </p>
+              <p class="excerpt">treatment for less severe depression.
+September 2024:
+We added links to relevant technology appraisal guidance in the
+sections on further-line treatment and treatment-resistant depression.
+
+May 2024:
+We have simplified the guideline by removing recommendations on general
+principles of care that are covered in other NICE guidelines (for example, the NICE
+guideline on service user experience in adult mental health).
+This is a presentational change only, and no changes to practice are intended.
+Apr</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.69</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Finding more information and committee details ·
+                Page 109
+                · relevant
+              </p>
+              <p class="excerpt">To find NICE guidance on related topics, including guidance in development, see the NICE
+topic page on depression.
+For full details of the evidence and the guideline committee&#x27;s discussions, see the
+evidence reviews. You can also find information about how the guideline was developed,
+including details of the committee.
+NICE has produced tools and resources to help you put this guideline into practice. For
+general help and advice on putting our guidelines into practice, see resources to help you</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q11 · threshold</h2>
+          <p class="q">How long must depressive symptoms last before depression can be diagnosed?</p>
+          <p class="metrics">Precision@3 = 0.67 · Precision@5 = 0.40</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.60</span>
+                <span class="tag">WHO</span>
+              </header>
+              <p class="meta">
+                WHOEMMNH219E-eng.pdf ·
+                WHO-EM/MNH/219/E ·
+                Section DEPRESSION ·
+                Page 2
+                · relevant
+              </p>
+              <p class="excerpt">Depression is the presence of persistent sadness
+and a loss of interest in activities that you
+normally enjoy, accompanied by an inability to
+carry out daily activities, for at least two weeks.
+It is difef rent from the usual mood fluctuations
+or temporary sadness in response to challenges
+in everyday life.
+It is a common illness; more than 300 million
+people are living with depression all around the
+world.
+It can happen to anybody and begin at any time.
+It may happen only once or it may be recu</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.69</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Chronic depressive symptoms ·
+                Page 84
+                · not-relevant
+              </p>
+              <p class="excerpt">People with chronic depressive symptoms includes those who continually meet criteria for
+the diagnosis of a major depressive episode for at least 2 years, or have persistent
+subthreshold symptoms for at least 2 years, or who have persistent low mood with or
+without concurrent episodes of major depression for at least 2 years. People with
+depressive symptoms may also have a number of social and personal difficulties that
+contribute to the maintenance of their chronic depressive symptoms.</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.55</span>
+                <span class="tag">WHO</span>
+              </header>
+              <p class="meta">
+                WHOEMMNH219E-eng.pdf ·
+                WHO-EM/MNH/219/E ·
+                Section Common causes of depression ·
+                Page 3
+                · relevant
+              </p>
+              <p class="excerpt">If you have been experiencing symptoms of
+depression most of the day, nearly every day,
+for at least two weeks, you may be sufef ring
+from depression. It is particularly important to
+seek help if you notice problems in your work or
+relationships, or other people tell you they are
+seeing a difef rence in you. It is good to talk to a
+friend or family member. Some people seek help
+from healers or religious leaders in their local
+community. Most people feel better temporarily
+after talking to those </p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.59</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf ·
+                NG134 ·
+                Section Context ·
+                Page 44
+                · not-relevant
+              </p>
+              <p class="excerpt">This guideline covers the identification and treatment of depression in children (5 to
+11 years) and young people (12 to 18 years) in primary, community and secondary care.
+Depression is a broad diagnosis that can include different symptoms in different people.
+However, depressed mood or loss of pleasure in most activities, are key signs of
+depression. Depressive symptoms are frequently accompanied by symptoms of anxiety,
+but may also occur on their own.
+The International Statistical Classificat</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.58</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section 1.9 Further-line treatment ·
+                Page 65
+                · not-relevant
+              </p>
+              <p class="excerpt">If a person&#x27;s depression has not responded at all after 4 weeks of antidepressant
+1.9.1
+medication at a recognised therapeutic dose, or after 4 to 6 weeks for
+psychological therapy or combined medication and psychological therapy,
+discuss with them:
+• whether there are any personal, social or environmental factors or physical or
+other mental health conditions that might explain why the treatment is not
+working
+• whether they have had problems adhering to the treatment plan (for
+example, stopping</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q12 · threshold</h2>
+          <p class="q">How many DSM-5 symptoms are required for a diagnosis of major depression?</p>
+          <p class="metrics">Precision@3 = 0.67 · Precision@5 = 0.60</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.65</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Depression ·
+                Page 85
+                · relevant
+              </p>
+              <p class="excerpt">• beliefs of low self-worth or excessive or inappropriate guilt
+• hopelessness about the future
+• recurrent thoughts of death or suicidal ideation or evidence of attempted suicide
+• significantly disrupted sleep or excessive sleep
+• significant changes in appetite or weight
+• psychomotor agitation or retardation
+• reduced energy or fatigue
+In DSM-5 depression is defined as the presence of 5 or more symptoms from a list of
+9 symptoms, during the same 2-week period and where at least 1 of the symp</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.65</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Recommendations ·
+                Page 6
+                · relevant
+              </p>
+              <p class="excerpt">The following guidance is based on the best available evidence. The full guideline gives
+details of the methods and the evidence used to develop the guidance.
+Box 1 Depression definitions (taken from DSM-IV)
+Subthreshold depressive symptoms: Fewer than 5 symptoms of depression.
+Mild depression: Few, if any, symptoms in excess of the 5 required to make the
+diagnosis, and symptoms result in only minor functional impairment.
+Moderate depression: Symptoms of functional impairment are between &#x27;mild&#x27; </p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.62</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Context ·
+                Page 40
+                · not-relevant
+              </p>
+              <p class="excerpt">likely that a diagnosis of depression will be based solely on symptom counting. In practical
+terms, clinicians are not expected to switch to DSM IV but should be aware that the
+threshold for mild depression is higher than with ICD 10 (5 symptoms not 4) and that
+degree of functional impairment should be routinely assessed before making a diagnosis.
+Using DSM IV enables the guideline to better target the use of specific interventions, such
+as antidepressants, for more severe degrees of depression.</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.62</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Context ·
+                Page 39
+                · not-relevant
+              </p>
+              <p class="excerpt">classification system requires at least 4 out of 10 depressive symptoms, whereas the DSM
+IV system requires at least 5 out of 9 for a diagnosis of major depression (referred to in
+this guideline as &#x27;depression&#x27;). Symptoms should be present for at least 2 weeks and each
+symptom should be present at sufficient severity for most of every day. Both diagnostic
+systems require at least 1 (DSM IV) or 2 (ICD 10) key symptoms (low mood [in both ICD 10
+and DSM IV], loss of interest and pleasure [in both I</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.61</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Recommendations ·
+                Page 7
+                · relevant
+              </p>
+              <p class="excerpt">Definitions of depression and severity
+Depression refers to a wide range of mental health problems characterised by the
+absence of a positive affect (a loss of interest and enjoyment in ordinary things and
+experiences), low mood and a range of associated emotional, cognitive, physical and
+behavioural symptoms. For more detail, see the International Classification of
+Diseases-11 (ICD-11) or the Diagnostic and Statistical Manual of Mental Disorders-5
+(DSM-5)
+criteria for depression.
+Depression sev</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q13 · threshold</h2>
+          <p class="q">After starting treatment for depression, when should the clinician review how well it is working?</p>
+          <p class="metrics">Precision@3 = 0.33 · Precision@5 = 0.20</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.66</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Starting antidepressant medication ·
+                Page 18
+                · relevant
+              </p>
+              <p class="excerpt">going to work, within 4 weeks)
+• when their first review will be; this will usually be within 2 weeks to check
+their symptoms are improving and for side effects, or 1 week after starting
+antidepressant medication if a new prescription is for a person aged 18 to
+25 years or if there is a particular concern for risk of suicide (see the
+recommendations on antidepressant medication for people at risk of suicide)
+• the importance of following instructions on how to take antidepressant
+medication (for</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.54</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf ·
+                CG91 ·
+                Section Active monitoring ·
+                Page 14
+                · not-relevant
+              </p>
+              <p class="excerpt">For patients who, in the judgement of the practitioner, may recover with no formal
+1.4.1.3
+intervention, or patients with mild depression who do not want an intervention, or
+patients with subthreshold depressive symptoms who request an intervention:
+• discuss the presenting problem(s) and any concerns that the patient may
+have about them
+• provide information about the nature and course of depression
+• arrange a further assessment, normally within 2 weeks
+• make contact if the patient does not a</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.60</span>
+                <span class="tag">USPSTF</span>
+              </header>
+              <p class="meta">
+                screening-depression-suicide-risk-children-final-recommendation.pdf ·
+                - ·
+                Section Supporting Evidence ·
+                Page 6
+                · not-relevant
+              </p>
+              <p class="excerpt">systems and clinics; only 1 study specifically targeted recruitment
+from mental health clinics.1,2 For pharmacotherapy interventions,
+the evidence is mostly limited to short-term benefits (typically up
+to 12 weeks).
+Pooled estimates demonstrated that psychotherapy, compared with wait-list controls, treatment as usual, attention control,
+or placebo, was associated with improved symptoms (Beck
+Depression Inventory or Beck Depression Inventory II standardized
+mean difference, −0.58 [95% CI, −0.83 t</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.67</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf ·
+                NG134 ·
+                Section Treatments for mild depression ·
+                Page 19
+                · not-relevant
+              </p>
+              <p class="excerpt">therapy after 2 to 3 months (recommendations 1.5.6 to 1.5.8 and table 1), refer the
+child or young person for review by a CAMHS team. [2019]
+Follow the recommendations on treating moderate to severe depression for
+1.5.11
+children and young people who have continuing depression after 2 to 3 months
+of psychological therapy (see the section on moderate to severe depression).
+[2019]
+For a short explanation of why the committee made the 2019 recommendations and
+how they might affect practice, see the</p>
+            </article>
+            
+            <article class="chunk not-relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.66</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-pdf-58302785221.pdf ·
+                QS8 ·
+                Section Outcome ·
+                Page 17
+                · not-relevant
+              </p>
+              <p class="excerpt">professionals and provider organisations, for example from patient records.
+c) Rates of relapse within 2 years of a review 2 years after starting antidepressants among
+adults who have been treated for a second or subsequent episode of depression.
+Data source:
+Data can be collected from information recorded locally by healthcare
+professionals and provider organisations, for example from patient records.</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q14 · threshold</h2>
+          <p class="q">For how many years must symptoms persist to be called chronic depressive symptoms in NICE NG222?</p>
+          <p class="metrics">Precision@3 = 1.00 · Precision@5 = 1.00</p>
+          
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 1</span>
+                <span class="score">Score 0.78</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Chronic depressive symptoms ·
+                Page 84
+                · relevant
+              </p>
+              <p class="excerpt">People with chronic depressive symptoms includes those who continually meet criteria for
+the diagnosis of a major depressive episode for at least 2 years, or have persistent
+subthreshold symptoms for at least 2 years, or who have persistent low mood with or
+without concurrent episodes of major depression for at least 2 years. People with
+depressive symptoms may also have a number of social and personal difficulties that
+contribute to the maintenance of their chronic depressive symptoms.</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 2</span>
+                <span class="score">Score 0.66</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section 1.10 Chronic depressive symptoms ·
+                Page 71
+                · relevant
+              </p>
+              <p class="excerpt">psychological therapy; this should be done by trained volunteers, typically
+with at least weekly contact for between 2 to 6 months
+• a rehabilitation programme, if their depression has led to loss of work or their
+withdrawing from social activities over the longer term. [2009, amended
+2022]
+For people with no or limited response to treatment for chronic depressive
+1.10.8
+symptoms that significantly impair personal and social functioning who have not
+responded to the treatments recommended in the</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 3</span>
+                <span class="score">Score 0.62</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section 1.8 Preventing relapse ·
+                Page 62
+                · relevant
+              </p>
+              <p class="excerpt">Discuss with people that continuation of treatment (antidepressants or
+1.8.1
+psychological therapies) after full or partial remission may reduce their risk of
+relapse and may help them stay well. Reach a shared decision on whether or not
+to continue a treatment for depression based on their clinical needs and
+preferences. See the visual summary on preventing relapse. [2022]
+Discuss with people that the likelihood of having a relapse may be increased if
+1.8.2
+they have:
+• a history of recurrent e</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 4</span>
+                <span class="score">Score 0.61</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Update information ·
+                Page 110–111
+                · relevant
+              </p>
+              <p class="excerpt">treatment for less severe depression.
+September 2024:
+We added links to relevant technology appraisal guidance in the
+sections on further-line treatment and treatment-resistant depression.
+
+May 2024:
+We have simplified the guideline by removing recommendations on general
+principles of care that are covered in other NICE guidelines (for example, the NICE
+guideline on service user experience in adult mental health).
+This is a presentational change only, and no changes to practice are intended.
+Apr</p>
+            </article>
+            
+            <article class="chunk relevant">
+              <header>
+                <span class="rank">Chunk 5</span>
+                <span class="score">Score 0.60</span>
+                <span class="tag">NICE</span>
+              </header>
+              <p class="meta">
+                depression-in-adults-treatment-and-management-pdf-66143832307909.pdf ·
+                NG222 ·
+                Section Depression in adults: treatment and management ·
+                Page 1–5
+                · relevant
+              </p>
+              <p class="excerpt">NICE guideline
+Published: 29 June 2022
+
+This guideline replaces CG90.
+This guideline partially replaces CG123.
+This guideline is the basis of QS8.</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q15 · out_of_scope</h2>
+          <p class="q">What insulin dose should be started in a newly diagnosed adult with type 1 diabetes?</p>
+          <p class="metrics">Precision@3 = 0.00 · Precision@5 = 0.00</p>
+          
+            <article class="chunk gated">
+              <p class="excerpt">No chunk passed the 0.53 confidence gate. Do not generate an answer.</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q16 · out_of_scope</h2>
+          <p class="q">How should community-acquired pneumonia be treated in adults?</p>
+          <p class="metrics">Precision@3 = 0.00 · Precision@5 = 0.00</p>
+          
+            <article class="chunk gated">
+              <p class="excerpt">No chunk passed the 0.53 confidence gate. Do not generate an answer.</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q17 · out_of_scope</h2>
+          <p class="q">What are the NICE criteria for starting a statin for primary prevention of CVD?</p>
+          <p class="metrics">Precision@3 = 0.00 · Precision@5 = 0.00</p>
+          
+            <article class="chunk gated">
+              <p class="excerpt">No chunk passed the 0.53 confidence gate. Do not generate an answer.</p>
+            </article>
+            
+        </section>
+        
+        <section class="query">
+          <h2>Q18 · out_of_scope</h2>
+          <p class="q">What is the surgical management of acute appendicitis?</p>
+          <p class="metrics">Precision@3 = 0.00 · Precision@5 = 0.00</p>
+          
+            <article class="chunk gated">
+              <p class="excerpt">No chunk passed the 0.53 confidence gate. Do not generate an answer.</p>
+            </article>
+            
+        </section>
+        
+  </main>
+</body>
+</html>
