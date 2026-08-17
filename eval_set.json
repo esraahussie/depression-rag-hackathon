@@ -1,0 +1,200 @@
+{
+  "description": "Day 2 mini evaluation set (18 questions). Types required by the brief: direct, paraphrased, abbreviation, threshold, out-of-scope.",
+  "questions": [
+    {
+      "id": "Q01",
+      "type": "direct",
+      "query": "What are the core diagnostic symptoms of major depressive disorder?",
+      "expected_sources": [
+        "WHOEMMNH219E-eng.pdf",
+        "depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf",
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf",
+        "depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf"
+      ],
+      "keywords": ["low mood", "anhedonia", "loss of interest", "key symptoms", "persistent sadness", "depressed mood", "signs and symptoms"],
+      "reason": "DSM/ICD diagnostic criteria for depression live in NICE CG91 appendix, NG222, and NG134 context."
+    },
+    {
+      "id": "Q02",
+      "type": "direct",
+      "query": "What treatment options are effective for depression, including medication and therapy?",
+      "expected_sources": [
+        "WHOEMMNH219E-eng.pdf",
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf"
+      ],
+      "keywords": ["antidepressant", "ssri", "cbt", "psychotherapy", "talk therapy", "cognitive"],
+      "reason": "WHO factsheet and NICE NG222 list antidepressants and psychological therapy."
+    },
+    {
+      "id": "Q03",
+      "type": "direct",
+      "query": "How is depression severity measured or screened in clinical settings?",
+      "expected_sources": [
+        "depression-suicide-risk-adults-rs.pdf",
+        "screening-depression-suicide-risk-children-final-recommendation.pdf",
+        "depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf",
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf"
+      ],
+      "keywords": ["screening", "phq", "instrument", "severity", "questionnaire"],
+      "reason": "USPSTF screening tests and NICE severity categories."
+    },
+    {
+      "id": "Q04",
+      "type": "paraphrased",
+      "query": "What signs mean an adult has clinical depression rather than ordinary sadness?",
+      "expected_sources": [
+        "WHOEMMNH219E-eng.pdf",
+        "depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf",
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf"
+      ],
+      "keywords": ["persistent", "two weeks", "2 weeks", "loss of interest", "sadness", "daily", "signs and symptoms"],
+      "reason": "Paraphrase of diagnostic duration and core symptoms."
+    },
+    {
+      "id": "Q05",
+      "type": "paraphrased",
+      "query": "What should a clinician try next if antidepressant tablets alone are not helping?",
+      "expected_sources": [
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf"
+      ],
+      "keywords": ["further-line", "switching", "combination", "psychological", "ssri", "limited response"],
+      "reason": "NG222 further-line treatment after limited antidepressant response."
+    },
+    {
+      "id": "Q06",
+      "type": "paraphrased",
+      "query": "How do clinicians decide whether depression is mild, moderate or severe?",
+      "expected_sources": [
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf",
+        "depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf",
+        "depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf"
+      ],
+      "keywords": ["mild", "moderate", "severe", "severity", "functioning", "icd", "symptom"],
+      "reason": "NICE severity continuum and ICD-10 categories."
+    },
+    {
+      "id": "Q07",
+      "type": "abbreviation",
+      "query": "What is PHQ-9 used for in depression care?",
+      "expected_sources": [
+        "depression-suicide-risk-adults-rs.pdf",
+        "screening-depression-suicide-risk-children-final-recommendation.pdf",
+        "depression-in-adults-pdf-58302785221.pdf"
+      ],
+      "keywords": ["phq-9", "phq 9", "patient health questionnaire"],
+      "reason": "Abbreviation for Patient Health Questionnaire-9 screening tool."
+    },
+    {
+      "id": "Q08",
+      "type": "abbreviation",
+      "query": "When should SSRIs be offered for depression in adults?",
+      "expected_sources": [
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf"
+      ],
+      "keywords": ["ssri", "antidepressant", "sertraline", "selective serotonin"],
+      "reason": "SSRI is an exact drug-class term; keyword/hybrid should help."
+    },
+    {
+      "id": "Q09",
+      "type": "abbreviation",
+      "query": "What does MDD mean and how is it diagnosed?",
+      "expected_sources": [
+        "depression-suicide-risk-adults-rs.pdf",
+        "depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf",
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf"
+      ],
+      "keywords": ["major depressive", "mdd", "dsm", "episode", "diagnosis"],
+      "reason": "MDD abbreviation used heavily in USPSTF statements."
+    },
+    {
+      "id": "Q10",
+      "type": "abbreviation",
+      "query": "What does NICE NG222 recommend for treating depression in adults?",
+      "expected_sources": [
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf"
+      ],
+      "keywords": ["ng222", "treatment", "recommendation", "adults"],
+      "reason": "Guideline ID should retrieve the NG222 PDF."
+    },
+    {
+      "id": "Q11",
+      "type": "threshold",
+      "query": "How long must depressive symptoms last before depression can be diagnosed?",
+      "expected_sources": [
+        "WHOEMMNH219E-eng.pdf",
+        "depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf",
+        "depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf",
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf"
+      ],
+      "keywords": ["2 weeks", "two weeks", "2-week", "fortnight"],
+      "reason": "Diagnostic duration threshold of two weeks."
+    },
+    {
+      "id": "Q12",
+      "type": "threshold",
+      "query": "How many DSM-5 symptoms are required for a diagnosis of major depression?",
+      "expected_sources": [
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf",
+        "depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf"
+      ],
+      "keywords": ["5 or more", "five or more", "5 of 9", "9 symptoms", "dsm-5", "dsm-iv"],
+      "reason": "Numeric diagnostic threshold."
+    },
+    {
+      "id": "Q13",
+      "type": "threshold",
+      "query": "After starting treatment for depression, when should the clinician review how well it is working?",
+      "expected_sources": [
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf"
+      ],
+      "keywords": ["2 and 4 weeks", "2 to 4", "between 2", "review", "weeks after starting"],
+      "reason": "NG222 review window of 2–4 weeks."
+    },
+    {
+      "id": "Q14",
+      "type": "threshold",
+      "query": "For how many years must symptoms persist to be called chronic depressive symptoms in NICE NG222?",
+      "expected_sources": [
+        "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf"
+      ],
+      "keywords": ["2 years", "two years", "chronic depressive"],
+      "reason": "Chronic depression duration threshold."
+    },
+    {
+      "id": "Q15",
+      "type": "out_of_scope",
+      "query": "What insulin dose should be started in a newly diagnosed adult with type 1 diabetes?",
+      "expected_sources": [],
+      "keywords": [],
+      "out_of_scope": true,
+      "reason": "No diabetes insulin guidance in this corpus. All hits should be not relevant."
+    },
+    {
+      "id": "Q16",
+      "type": "out_of_scope",
+      "query": "How should community-acquired pneumonia be treated in adults?",
+      "expected_sources": [],
+      "keywords": [],
+      "out_of_scope": true,
+      "reason": "Respiratory infection is outside the depression knowledge base."
+    },
+    {
+      "id": "Q17",
+      "type": "out_of_scope",
+      "query": "What are the NICE criteria for starting a statin for primary prevention of CVD?",
+      "expected_sources": [],
+      "keywords": [],
+      "out_of_scope": true,
+      "reason": "Cardiovascular prevention is not in the indexed PDFs."
+    },
+    {
+      "id": "Q18",
+      "type": "out_of_scope",
+      "query": "What is the surgical management of acute appendicitis?",
+      "expected_sources": [],
+      "keywords": [],
+      "out_of_scope": true,
+      "reason": "Surgical topic; used as a documented retrieval failure case."
+    }
+  ]
+}
