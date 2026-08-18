@@ -12,7 +12,6 @@ except ImportError:
     pdfplumber = None
 
 
-# SETTINGS
 PDF_FOLDER = "pdfs"
 OUTPUT_FOLDER = "outputs"
 METADATA_FILE = os.path.join(OUTPUT_FOLDER, "chunks_metadata.json")
@@ -24,6 +23,25 @@ CHUNK_OVERLAP = 120
 MIN_CHUNK_CHARS = 80
 
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+
+SOURCE_URLS = {
+    "depression-in-adults-pdf-58302785221.pdf": "https://www.nice.org.uk/guidance/qs8",
+    "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf": "https://www.nice.org.uk/guidance/ng222",
+    "depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf": "https://www.nice.org.uk/guidance/cg91",
+    "depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf": "https://www.nice.org.uk/guidance/ng134",
+    "depression-in-children-and-young-people-pdf-2098673428165.pdf": "https://www.nice.org.uk/guidance/qs48",
+    "depression-suicide-risk-adults-rs.pdf": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-depression-suicide-risk-adults",
+    "perinatal-depression-final-rec-statement.pdf": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/perinatal-depression-preventive-interventions",
+    "anxiety-adults-screening-final-recommendation.pdf": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/anxiety-adults-screening",
+    "screening-anxiety-children-final-recommendation.pdf": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/anxiety-children-adolescents-screening",
+    "screening-depression-suicide-risk-children-final-recommendation.pdf": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-depression-suicide-risk-children-adolescents",
+    "WHOEMMNH219E-eng.pdf": "https://applications.emro.who.int/docs/EMROPUB_2019_EN_23407.pdf",
+    "WHOEMMNH222E-eng.pdf": "https://applications.emro.who.int/docs/EMROPUB_2019_EN_23408.pdf",
+}
+
+
+def resolve_source_url(file_name: str) -> str:
+    return SOURCE_URLS.get(file_name, "")
 
 TEST_QUERIES = [
     "What are the core diagnostic symptoms of major depressive disorder?",
@@ -97,8 +115,6 @@ LAST_UPDATED_RE = re.compile(
     re.I,
 )
 
-
-# STEP 1: LOW-LEVEL PAGE EXTRACTION (PyMuPDF layout)
 
 def _reconstruct_line_text(line):
     """Rebuild a line from character boxes so missing PDF spaces are restored."""
@@ -531,7 +547,6 @@ def clean_text(text):
     return text.strip()
 
 
-# STEP 3: DOCUMENT METADATA
 
 def _pdf_year(meta):
     for key in ("modDate", "creationDate"):
@@ -636,7 +651,6 @@ def toc_section_for_page(toc, page_number):
     return current[:200]
 
 
-# STEP 4: DOCUMENT -> SECTION BLOCKS
 
 def extract_document(pdf_path):
     doc = fitz.open(pdf_path)
@@ -914,6 +928,7 @@ def _chroma_metadata(meta):
         "chunk_index": int(meta.get("chunk_index") or 0),
         "char_count": int(meta.get("char_count") or 0),
         "has_table": bool(meta.get("has_table")),
+        "source_url": str(meta.get("source_url") or ""),
     }
 
 
@@ -963,6 +978,7 @@ def build_chunks_and_metadata(chunk_size=CHUNK_SIZE, overlap=CHUNK_OVERLAP):
                 "chunk_index": i,
                 "char_count": len(text),
                 "has_table": chunk["has_table"],
+                "source_url": resolve_source_url(file_name),
                 "text_preview": text[:200],
             })
 
@@ -1034,6 +1050,7 @@ def run_test_queries(collection, queries=TEST_QUERIES, n_results=3):
             print(f"    page       = {page}")
             print(f"    section    = {metadata.get('section_title', 'Unspecified')}")
             print(f"    chunk      = {metadata.get('chunk_id', 'N/A')}")
+            print(f"    source_url = {metadata.get('source_url') or '-'}")
             print("\n    TEXT:")
             print(documents[rank])
 
@@ -1257,6 +1274,7 @@ def check_similarity(chunk_texts, metadata_list, queries=TEST_QUERIES, n_results
             print(f"    page       = {page}")
             print(f"    section    = {meta.get('section_title', 'Unspecified')}")
             print(f"    chunk      = {meta.get('chunk_id', 'N/A')}")
+            print(f"    source_url = {meta.get('source_url') or '-'}")
             print("\n    TEXT:")
             print(chunk_texts[idx][:700])
             hits.append({
@@ -1271,6 +1289,7 @@ def check_similarity(chunk_texts, metadata_list, queries=TEST_QUERIES, n_results
                 "page_start": meta.get("page_start"),
                 "page_end": meta.get("page_end"),
                 "section_title": meta.get("section_title"),
+                "source_url": meta.get("source_url"),
                 "text_preview": chunk_texts[idx][:280],
             })
         report["queries"].append({"query": query, "hits": hits})
@@ -1304,4 +1323,3 @@ if __name__ == "__main__":
         run_test_queries(collection)
     except Exception as exc:
         print(f"\nChroma embedding skipped ({exc}). Similarity scores above are still valid.")
-

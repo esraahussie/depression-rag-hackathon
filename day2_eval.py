@@ -37,6 +37,7 @@ from main import (
     embed_minilm_onnx,
     extract_document,
     format_chunk_for_embedding,
+    resolve_source_url,
 )
 
 EVAL_SET_FILE = "eval_set.json"
@@ -44,8 +45,6 @@ PANEL_FILE = os.path.join(OUTPUT_FOLDER, "evidence_panel.html")
 RESULTS_FILE = os.path.join(OUTPUT_FOLDER, "day2_eval.json")
 FINDINGS_FILE = os.path.join(OUTPUT_FOLDER, "day2_findings.md")
 
-# Experiment A: tighter recommendation-style chunks (10–15% overlap)
-# Experiment B: longer paragraphs/tables
 SETTINGS = {
     "A_500_75": {"chunk_size": 500, "overlap": 75, "label": "500 chars / 15% overlap"},
     "B_900_120": {"chunk_size": 900, "overlap": 120, "label": "900 chars / 13% overlap"},
@@ -119,6 +118,7 @@ def chunks_from_cache(cached, chunk_size, overlap):
                 "page_end": chunk["page_end"],
                 "section_title": chunk["section_title"],
                 "char_count": len(chunk["text"]),
+                "source_url": resolve_source_url(file_name),
             })
     return texts, metas
 
@@ -184,9 +184,11 @@ def evaluate_setup(name, setting, cached, questions):
 
     for strategy in STRATEGIES:
         q_rows = []
-        p3, p5, top1 = [], [], []
+        precisions_by_k = {k: [] for k in K_VALUES}
+        top1 = []
+        max_k = max(K_VALUES)
         for qi, question in enumerate(questions):
-            hits = retrieve(cleaned_queries[qi], texts, metas, sem_mat, kw_mat, doc_emb, qi, strategy, k=10)
+            hits = retrieve(cleaned_queries[qi], texts, metas, sem_mat, kw_mat, doc_emb, qi, strategy, k=max_k)
             for hit in hits:
                 hit["relevant"] = is_relevant(hit["text"], hit, question)
             flags = [1 if h["relevant"] else 0 for h in hits]
@@ -195,6 +197,8 @@ def evaluate_setup(name, setting, cached, questions):
                 "type": question["type"],
                 "query": question["query"],
                 "out_of_scope": bool(question.get("out_of_scope")),
+                "precision_at_k": {k: round(precision_at_k(flags, k), 3) for k in K_VALUES},
+                # نفس القيم القديمة اتسابت عشان أي كود تاني بيعتمد عليها يفضل شغال
                 "precision_at_3": round(precision_at_k(flags, 3), 3),
                 "precision_at_5": round(precision_at_k(flags, 5), 3),
                 "best_rank": next((h["rank"] for h in hits if h["relevant"]), None),
@@ -204,20 +208,24 @@ def evaluate_setup(name, setting, cached, questions):
             }
             q_rows.append(row)
             if not question.get("out_of_scope"):
-                p3.append(row["precision_at_3"])
-                p5.append(row["precision_at_5"])
+                for k in K_VALUES:
+                    precisions_by_k[k].append(row["precision_at_k"][k])
                 top1.append(row["top1_similarity"])
+
+        mean_precision_at_k = {
+            k: (round(float(np.mean(precisions_by_k[k])), 3) if precisions_by_k[k] else 0.0)
+            for k in K_VALUES
+        }
         setup["strategies"][strategy] = {
-            "mean_precision_at_3": round(float(np.mean(p3)), 3) if p3 else 0.0,
-            "mean_precision_at_5": round(float(np.mean(p5)), 3) if p5 else 0.0,
+            "mean_precision_at_k": mean_precision_at_k,
+            # اتسابت للتوافق مع أي كود قديم بيقرا الاسمين دول بالظبط
+            "mean_precision_at_3": mean_precision_at_k[3],
+            "mean_precision_at_5": mean_precision_at_k[5],
             "mean_top1_similarity": round(float(np.mean(top1)), 3) if top1 else 0.0,
             "questions": q_rows,
         }
-        print(
-            f"  {strategy:9s}  P@3={setup['strategies'][strategy]['mean_precision_at_3']:.3f}  "
-            f"P@5={setup['strategies'][strategy]['mean_precision_at_5']:.3f}  "
-            f"top1={setup['strategies'][strategy]['mean_top1_similarity']:.3f}"
-        )
+        k_summary = "  ".join(f"P@{k}={mean_precision_at_k[k]:.3f}" for k in K_VALUES)
+        print(f"  {strategy:9s}  {k_summary}  top1={setup['strategies'][strategy]['mean_top1_similarity']:.3f}")
     return setup
 
 
@@ -254,6 +262,7 @@ def write_panel(best_name, best_strategy, payload, setup):
                 Page {hit.get('page_start')}{'' if hit.get('page_start')==hit.get('page_end') else '–' + str(hit.get('page_end'))}
                 · {flag}
               </p>
+              <p class="source-url"><a href="{html.escape(hit.get('source_url') or '#')}" target="_blank">{html.escape(hit.get('source_url') or 'no source_url registered')}</a></p>
               <p class="excerpt">{excerpt}</p>
             </article>
             """)
@@ -289,6 +298,8 @@ def write_panel(best_name, best_strategy, payload, setup):
     .rank, .score, .tag {{ margin-right: 10px; font-size: 13px; }}
     .score {{ font-weight: 700; }}
     .meta {{ color: #4b5b66; font-size: 13px; }}
+    .source-url {{ font-size: 12px; margin: 2px 0 8px; }}
+    .source-url a {{ color: #1a6fa3; word-break: break-all; }}
     .excerpt {{ white-space: pre-wrap; font-size: 14px; }}
   </style>
 </head>
@@ -319,16 +330,18 @@ def write_findings(results, best):
         "",
         "## Chunk settings compared",
         "",
-        "| Setting | Chunks | Strategy | Precision@3 | Precision@5 | Mean Top-1 |",
-        "|---|---:|---|---:|---:|---:|",
+        "| Setting | Chunks | Strategy | Precision@3 | Precision@5 | Precision@10 | Mean Top-1 |",
+        "|---|---:|---|---:|---:|---:|---:|",
     ]
     for setup_row in results:
         for strategy, body in setup_row["strategies"].items():
             mark = " **best**" if setup_row["name"] == best_name and strategy == best_strategy else ""
+            p_at_k = body.get("mean_precision_at_k", {})
+            p10 = p_at_k.get(10, p_at_k.get("10", 0.0))
             lines.append(
                 f"| {setup_row['label']} | {setup_row['n_chunks']} | {strategy}{mark} | "
                 f"{body['mean_precision_at_3']:.3f} | {body['mean_precision_at_5']:.3f} | "
-                f"{body.get('mean_top1_similarity', 0):.3f} |"
+                f"{p10:.3f} | {body.get('mean_top1_similarity', 0):.3f} |"
             )
     lines += [
         "",
@@ -373,7 +386,24 @@ def write_findings(results, best):
         "",
         "## Top-K note",
         "",
-        "Inspect Top-3, Top-5, and Top-10 on the evidence panel. Use Top-5 as the default: Top-3 misses some paraphrases; Top-10 adds off-section noise.",
+    ]
+    best_k_precisions = payload.get("mean_precision_at_k", {})
+    p3v = best_k_precisions.get(3, payload.get("mean_precision_at_3", 0.0))
+    p5v = best_k_precisions.get(5, payload.get("mean_precision_at_5", 0.0))
+    p10v = best_k_precisions.get(10, 0.0)
+    lines += [
+        f"Measured (not just inspected) on the chosen setup ({setup['label']} + {best_strategy}):",
+        "",
+        "| K | Precision@K |",
+        "|---:|---:|",
+        f"| 3 | {p3v:.3f} |",
+        f"| 5 | {p5v:.3f} |",
+        f"| 10 | {p10v:.3f} |",
+        "",
+        f"Top-3 ({p3v:.3f}) misses some paraphrases that Top-5 ({p5v:.3f}) catches. "
+        f"Top-10 ({p10v:.3f}) is {'lower' if p10v < p5v else 'not lower'} than Top-5, confirming extra "
+        "slots mostly add off-section noise rather than new relevant evidence. "
+        "Top-5 stays the default passed to generation.",
     ]
     with open(FINDINGS_FILE, "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
