@@ -222,6 +222,33 @@ section[data-testid="stSidebar"] * {
 [data-testid="stExpander"] * {
     color: #1e2a5e !important;
 }
+
+/* Chat answer text */
+div[data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] {
+    color: #1f2937 !important;
+}
+
+div[data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] p {
+    color: #1f2937 !important;
+}
+
+div[data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] li {
+    color: #1f2937 !important;
+}
+
+div[data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] strong {
+    color: #111827 !important;
+}
+
+div[data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] em {
+    color: #4b5563 !important;
+}
+
+div[data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] h1,
+div[data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] h2,
+div[data-testid="stChatMessage"] [data-testid="stMarkdownContainer"] h3 {
+    color: #111827 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
