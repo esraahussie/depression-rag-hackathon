@@ -258,12 +258,22 @@ def calibrate_confidence_thresholds(day2_results_path=DAY2_RESULTS_FILE):
 
     high_cutoff = None
     medium_cutoff = None
+
+    # Find High cutoff
+    for c in candidates: 
+        precision = precision_at_cutoff(c)
+
+        if precision >= 0.80:
+            high_cutoff = c
+            break
+
+    # Find Medium cutoff strictly below High
     for c in candidates:
         precision = precision_at_cutoff(c)
-        if high_cutoff is None and precision >= 0.80:
-            high_cutoff = c
-        if medium_cutoff is None and precision >= 0.50:
+
+        if high_cutoff is not None and c < high_cutoff and precision >= 0.50:
             medium_cutoff = c
+            break
 
     high_cutoff = high_cutoff if high_cutoff is not None else DEFAULT_CALIBRATION["high_cutoff"]
     medium_cutoff = medium_cutoff if medium_cutoff is not None else DEFAULT_CALIBRATION["medium_cutoff"]
