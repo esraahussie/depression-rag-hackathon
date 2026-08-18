@@ -325,72 +325,98 @@ def confidence_from_hits(hits, calibration=None):
 # Step 5b — refusal threshold calibration (retrieval confidence gate)
 # ---------------------------------------------------------------------------
 
-def calibrate_refusal_threshold(day2_results_path=DAY2_RESULTS_FILE, thresholds=None):
-    """Sweeps candidate MIN_RETRIEVE_SCORE values against Day 2's labeled
-    in-scope / out-of-scope questions and reports, per threshold:
-      - false_accept_rate: out-of-scope questions whose top-1 score would
-        still clear the gate (the dangerous failure mode — we'd generate
-        an answer for a question we have no business answering)
-      - false_refuse_rate: in-scope questions whose top-1 score would be
-        gated out even though evidence existed (annoying, but safe)
-    and recommends the lowest threshold with zero false accepts, breaking
-    ties toward fewer false refusals.
+def calibrate_confidence_thresholds(day2_results_path=DAY2_RESULTS_FILE):
     """
+    Calibrate confidence bands from the distribution of labeled retrieval
+    similarity scores.
+
+    The retrieval gate remains responsible for deciding whether there is
+    enough evidence to answer.
+
+    Confidence bands describe how strong the retrieval similarity is:
+        High   -> upper part of observed labeled-score distribution
+        Medium -> middle/upper part
+        Low    -> above retrieval gate but below Medium
+
+    This is intentionally separate from refusal calibration.
+    """
+
     if not os.path.exists(day2_results_path):
-        return {
-            "recommended_threshold": MIN_RETRIEVE_SCORE,
-            "note": f"{day2_results_path} not found; kept current MIN_RETRIEVE_SCORE.",
-            "sweep": [],
-        }
+        return dict(DEFAULT_CALIBRATION)
 
     with open(day2_results_path, encoding="utf-8") as f:
         day2_results = json.load(f)
 
-    best = day2_results.get("best") or {}
-    in_scope_scores, out_of_scope_scores = [], []
+    scores = []
+
     for setup in day2_results.get("results", []):
-        if best.get("setting") and setup["name"] != best["setting"]:
-            continue
         for strategy, payload in setup.get("strategies", {}).items():
-            if best.get("strategy") and strategy != best["strategy"]:
-                continue
             for q in payload.get("questions", []):
-                top1 = q.get("top1_similarity", 0.0)
+
                 if q.get("out_of_scope"):
-                    out_of_scope_scores.append(top1)
-                else:
-                    in_scope_scores.append(top1)
+                    continue
 
-    if not in_scope_scores and not out_of_scope_scores:
-        return {
-            "recommended_threshold": MIN_RETRIEVE_SCORE,
-            "note": "No labeled questions found in day2_eval.json.",
-            "sweep": [],
-        }
+                hits = q.get("hits") or []
 
-    thresholds = thresholds or [round(0.40 + 0.01 * i, 2) for i in range(41)]  # 0.40..0.80
-    sweep = []
-    for t in thresholds:
-        false_accepts = sum(1 for s in out_of_scope_scores if s >= t)
-        false_refuses = sum(1 for s in in_scope_scores if s < t)
-        sweep.append({
-            "threshold": t,
-            "false_accept_rate": round(false_accepts / len(out_of_scope_scores), 3) if out_of_scope_scores else 0.0,
-            "false_refuse_rate": round(false_refuses / len(in_scope_scores), 3) if in_scope_scores else 0.0,
-        })
+                for hit in hits:
+                    score = hit.get("similarity")
 
-    zero_false_accept = [row for row in sweep if row["false_accept_rate"] == 0.0]
-    pool = zero_false_accept or sweep
-    recommended = min(pool, key=lambda row: (row["false_refuse_rate"], row["threshold"]))
+                    if score is not None:
+                        scores.append(float(score))
+
+    if not scores:
+        return dict(DEFAULT_CALIBRATION)
+
+    scores.sort()
+
+    def percentile(values, p):
+        """
+        Linear percentile calculation without requiring NumPy.
+        p is between 0 and 1.
+        """
+        if not values:
+            return 0.0
+
+        if len(values) == 1:
+            return values[0]
+
+        position = (len(values) - 1) * p
+        lower = int(position)
+        upper = min(lower + 1, len(values) - 1)
+
+        weight = position - lower
+
+        return (
+            values[lower] * (1 - weight)
+            + values[upper] * weight
+        )
+
+    # Use the observed labeled retrieval-score distribution.
+    medium_cutoff = percentile(scores, 0.60)
+    high_cutoff = percentile(scores, 0.80)
+
+    # Keep the bands above the retrieval gate.
+    medium_cutoff = max(
+        medium_cutoff,
+        MIN_RETRIEVE_SCORE
+    )
+
+    high_cutoff = max(
+        high_cutoff,
+        medium_cutoff
+    )
 
     return {
-        "recommended_threshold": recommended["threshold"],
-        "current_threshold": MIN_RETRIEVE_SCORE,
-        "n_in_scope": len(in_scope_scores),
-        "n_out_of_scope": len(out_of_scope_scores),
-        "sweep": sweep,
+        "high_cutoff": round(high_cutoff, 3),
+        "medium_cutoff": round(medium_cutoff, 3),
+        "retrieval_gate": MIN_RETRIEVE_SCORE,
+        "n_labeled_scores": len(scores),
+        "score_min": round(min(scores), 3),
+        "score_max": round(max(scores), 3),
+        "score_median": round(percentile(scores, 0.50), 3),
+        "source": os.path.basename(day2_results_path),
+        "method": "labeled_score_distribution_percentiles"
     }
-
 
 # ---------------------------------------------------------------------------
 # Retrieval (unchanged mechanics from the original Day 3 draft)
