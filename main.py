@@ -42,10 +42,18 @@ def main():
         return
 
     if args.query:
-        answer, results = ask(index, args.query, n_results=args.n_results,
-                               use_relevance_gate=not args.no_gate)
-        print(f"\nAnswer:\n{answer}")
-        print_readable_references(results)
+        result = ask(index, args.query, n_results=args.n_results,
+                     use_relevance_gate=not args.no_gate)
+        print(f"\nAnswer:\n{result['answer']}")
+        print(f"Confidence: {result['confidence']:.0%}  Status: {result['status']}")
+        if result["sources"]:
+            print("\nSupporting sources:")
+            for s in result["sources"]:
+                page = s["page"] if s["page"] is not None else "N/A"
+                chunk = s["chunk"] if s["chunk"] is not None else "N/A"
+                rel = f"{s['relevance_score']:.2f}" if s["relevance_score"] is not None else "N/A"
+                print(f"  [{s['citation_id']}] {s['name']} | PDF: {s['pdf']} | Page: {page} | Chunk: {chunk} | Relevance: {rel}")
+        print_readable_references(result["results"])
         return
 
     # interactive loop — index stays loaded in memory between questions
@@ -59,10 +67,18 @@ def main():
         if not query or query.lower() in ("quit", "exit"):
             break
 
-        answer, results = ask(index, query, n_results=args.n_results,
-                               use_relevance_gate=not args.no_gate)
-        print(f"\nAnswer:\n{answer}")
-        print_readable_references(results)
+        result = ask(index, query, n_results=args.n_results,
+                       use_relevance_gate=not args.no_gate)
+        print(f"\nAnswer:\n{result['answer']}")
+        print(f"Confidence: {result['confidence']:.0%}  Status: {result['status']}")
+        if result["sources"]:
+            print("\nSupporting sources:")
+            for s in result["sources"]:
+                page = s["page"] if s["page"] is not None else "N/A"
+                chunk = s["chunk"] if s["chunk"] is not None else "N/A"
+                rel = f"{s['relevance_score']:.2f}" if s["relevance_score"] is not None else "N/A"
+                print(f"  [{s['citation_id']}] {s['name']} | PDF: {s['pdf']} | Page: {page} | Chunk: {chunk} | Relevance: {rel}")
+        print_readable_references(result["results"])
 
 
 if __name__ == "__main__":

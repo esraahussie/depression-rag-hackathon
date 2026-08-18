@@ -59,6 +59,12 @@ RERANK_POOL = 10   # how many fused candidates get passed into the reranker
 # out-of-scope queries.
 RERANK_RELEVANCE_THRESHOLD = 2.0
 
+# Below the main gate but above noise — "related topic, weak evidence".
+INSUFFICIENT_EVIDENCE_THRESHOLD = 0.5
+
+# Used when reranking is disabled (fused RRF scores are much smaller).
+FUSED_RELEVANCE_THRESHOLD = 0.012
+
 # ---------------------------------------------------------------------
 # EVALUATION
 # ---------------------------------------------------------------------
@@ -86,10 +92,10 @@ TEST_QUERIES = [
 GENERATION_MODEL = "openai/gpt-oss-120b"
 
 GENERATION_SYSTEM_PROMPT = (
-    "You are a clinical evidence assistant. Answer the user's question "
-    "using ONLY the numbered context passages provided below. "
-    "Every claim you make must end with a [n] citation marker matching "
-    "the passage number it came from. If the passages don't contain "
-    "enough information to answer, say so explicitly instead of guessing. "
-    "Do not use outside knowledge."
+    "You are a clinical evidence assistant for MindCare. Answer ONLY using the "
+    "numbered source passages provided. Rules:\n"
+    "1. Every factual claim MUST end with a [n] citation matching a provided source ID.\n"
+    "2. ONLY use citation IDs listed in the Source Index — never invent new numbers.\n"
+    "3. If the passages lack enough information, say so explicitly. Do not guess.\n"
+    "4. Do not use outside knowledge. Do not answer off-topic questions."
 )

@@ -41,15 +41,55 @@ function getSeverity(score) {
   return { label: 'Severe', className: 'severity-severe' }
 }
 
-function renderSources(sources) {
-  if (!sources?.length) return ''
-  const items = sources.map((s) => {
-    let meta = ''
-    if (s.relevance_score != null) meta += `<span class="source-score">Relevance: ${s.relevance_score.toFixed(2)}</span>`
-    if (s.page != null) meta += `<span class="source-page">p. ${s.page}</span>`
-    return `<li class="source-item"><span class="source-name">${escapeHtml(s.name)}</span>${meta}</li>`
+function formatRelevance(score) {
+  if (score == null) return null
+  return `${Math.round(score * 100)}%`
+}
+
+function renderAnswerWithCitations(text) {
+  if (!text) return ''
+  return text.split(/(\[\d+\])/g).map((part) => {
+    const match = part.match(/^\[(\d+)\]$/)
+    if (match) {
+      const id = match[1]
+      return `<button type="button" class="citation-marker" data-citation="${id}" aria-label="Go to source ${id}">[${id}]</button>`
+    }
+    return escapeHtml(part)
   }).join('')
-  return `<div class="sources-block"><h4 class="sources-title">Sources</h4><ul class="sources-list">${items}</ul></div>`
+}
+
+function renderSourceCard(source, prefix = '') {
+  const page = source.page != null ? source.page : 'N/A'
+  const chunk = source.chunk != null ? source.chunk : 'N/A'
+  const relevance = formatRelevance(source.relevance_score)
+  const relHtml = relevance ? `<div><dt>Relevance</dt><dd>${relevance}</dd></div>` : ''
+  return `
+    <li id="source-${source.citation_id}" class="source-item">
+      <div class="source-header">
+        <span class="source-citation-id">[${source.citation_id}]</span>
+        <span class="source-name">${escapeHtml(source.name)}</span>
+      </div>
+      <dl class="source-meta">
+        <div><dt>PDF</dt><dd>${escapeHtml(source.pdf)}</dd></div>
+        <div><dt>Page</dt><dd>${page}</dd></div>
+        <div><dt>Chunk</dt><dd>${chunk}</dd></div>
+        ${relHtml}
+      </dl>
+    </li>`
+}
+
+function renderSources(sources, additionalSources, confidence, status) {
+  let html = ''
+  if (confidence != null && status !== 'out_of_scope') {
+    html += `<p class="confidence-badge">Confidence: <strong>${Math.round(confidence * 100)}%</strong></p>`
+  }
+  if (sources?.length) {
+    html += `<div class="sources-block"><h4 class="sources-title">Supporting Sources</h4><ul class="sources-list">${sources.map((s) => renderSourceCard(s)).join('')}</ul></div>`
+  }
+  if (additionalSources?.length) {
+    html += `<div class="sources-block sources-additional"><h4 class="sources-title">Additional Retrieved Sources</h4><ul class="sources-list">${additionalSources.map((s) => renderSourceCard(s)).join('')}</ul></div>`
+  }
+  return html
 }
 
 function renderChatMessage(msg) {
@@ -80,8 +120,8 @@ function renderChatMessage(msg) {
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 4c-2.8 0-4.8 2-4.8 4.8 0 3.2 2.4 4.4 4.8 7.2 2.4-2.8 4.8-4 4.8-7.2C16.8 6 14.8 4 12 4z" fill="currentColor"/></svg>
       </div>
       <div class="message-bubble assistant-bubble">
-        <p class="message-text">${escapeHtml(msg.content)}</p>
-        ${renderSources(msg.sources)}
+        <p class="message-text">${renderAnswerWithCitations(msg.content)}</p>
+        ${renderSources(msg.sources, msg.additionalSources, msg.confidence, msg.status)}
       </div>
     </div>`
 }
@@ -246,7 +286,7 @@ async function sendMessage(text) {
     }
     const data = await res.json()
     chatState.messages.pop()
-    chatState.messages.push({ role: 'assistant', content: data.answer, sources: data.sources })
+    chatState.messages.push({ role: 'assistant', content: data.answer, sources: data.sources, additionalSources: data.additional_sources, confidence: data.confidence, status: data.status })
   } catch {
     chatState.messages.pop()
     chatState.messages.push({
@@ -278,6 +318,15 @@ function bindEvents(route) {
     })
     document.querySelectorAll('.example-btn').forEach((btn) => {
       btn.addEventListener('click', () => sendMessage(btn.dataset.question))
+    })
+    document.querySelectorAll('.citation-marker').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.citation
+        const el = document.getElementById(`source-${id}`)
+        el?.classList.add('source-highlight')
+        el?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+        setTimeout(() => el?.classList.remove('source-highlight'), 2000)
+      })
     })
   } else {
     document.querySelectorAll('.option-label input').forEach((input) => {

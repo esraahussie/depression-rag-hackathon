@@ -1,6 +1,12 @@
+import os
+
 from dotenv import load_dotenv
-from groq import Groq
 
 load_dotenv()
 
-client = Groq()
+# Groq LLM when GROQ_API_KEY is set; otherwise pipeline uses extractive fallback.
+client = None
+if os.getenv("GROQ_API_KEY"):
+    from groq import Groq
+
+    client = Groq()

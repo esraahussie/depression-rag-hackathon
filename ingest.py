@@ -124,6 +124,7 @@ def embed_chunks(chunk_texts, chunk_ids, metadata_list):
 
     simple_metadata = [
         {
+            "chunk_id": m["chunk_id"],
             "source_file": m["source_file"],
             "page_number": m["page_number"],
             "chunk_index_in_page": m["chunk_index_in_page"],

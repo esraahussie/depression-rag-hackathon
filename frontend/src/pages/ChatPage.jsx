@@ -7,58 +7,139 @@ const EXAMPLE_QUESTIONS = [
   'How can I support someone experiencing depression?',
 ]
 
-function SourceList({ sources }) {
-  if (!sources?.length) return null
+function formatRelevance(score) {
+  if (score == null) return null
+  return `${Math.round(score * 100)}%`
+}
+
+function renderAnswerWithCitations(text, onCitationClick) {
+  if (!text) return null
+  const parts = text.split(/(\[\d+\])/g)
+  return parts.map((part, i) => {
+    const match = part.match(/^\[(\d+)\]$/)
+    if (match) {
+      const id = match[1]
+      return (
+        <button
+          key={`cite-${i}-${id}`}
+          type="button"
+          className="citation-marker"
+          onClick={() => onCitationClick(id)}
+          aria-label={`Go to source ${id}`}
+        >
+          [{id}]
+        </button>
+      )
+    }
+    return <React.Fragment key={`t-${i}`}>{part}</React.Fragment>
+  })
+}
+
+function SourceCard({ source, highlighted }) {
+  const page = source.page != null ? source.page : 'N/A'
+  const chunk = source.chunk != null ? source.chunk : 'N/A'
+  const relevance = formatRelevance(source.relevance_score)
 
   return (
-    <div className="sources-block">
-      <h4 className="sources-title">Sources</h4>
-      <ul className="sources-list">
-        {sources.map((source, i) => (
-          <li key={i} className="source-item">
-            <span className="source-name">{source.name}</span>
-            {source.relevance_score != null && (
-              <span className="source-score">Relevance: {source.relevance_score.toFixed(2)}</span>
-            )}
-            {source.page != null && (
-              <span className="source-page">p. {source.page}</span>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <li
+      id={`source-${source.citation_id}`}
+      className={`source-item ${highlighted ? 'source-highlight' : ''}`}
+    >
+      <div className="source-header">
+        <span className="source-citation-id">[{source.citation_id}]</span>
+        <span className="source-name">{source.name}</span>
+      </div>
+      <dl className="source-meta">
+        <div><dt>PDF</dt><dd>{source.pdf}</dd></div>
+        <div><dt>Page</dt><dd>{page}</dd></div>
+        <div><dt>Chunk</dt><dd>{chunk}</dd></div>
+        {relevance != null && (
+          <div><dt>Relevance</dt><dd>{relevance}</dd></div>
+        )}
+      </dl>
+    </li>
   )
 }
 
-function MessageBubble({ message }) {
-  const isUser = message.role === 'user'
+function AssistantMessage({ message }) {
+  const [highlightedId, setHighlightedId] = React.useState(null)
+
+  const handleCitationClick = (id) => {
+    setHighlightedId(id)
+    document.getElementById(`source-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    setTimeout(() => setHighlightedId(null), 2000)
+  }
+
+  const confidencePct =
+    message.confidence != null ? `${Math.round(message.confidence * 100)}%` : null
 
   return (
-    <div className={`message-row ${isUser ? 'user' : 'assistant'}`}>
-      {!isUser && (
-        <div className="avatar assistant-avatar" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 4c-2.8 0-4.8 2-4.8 4.8 0 3.2 2.4 4.4 4.8 7.2 2.4-2.8 4.8-4 4.8-7.2C16.8 6 14.8 4 12 4z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-      )}
-      <div className={`message-bubble ${isUser ? 'user-bubble' : 'assistant-bubble'}`}>
+    <div className="message-row assistant">
+      <div className="avatar assistant-avatar" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 4c-2.8 0-4.8 2-4.8 4.8 0 3.2 2.4 4.4 4.8 7.2 2.4-2.8 4.8-4 4.8-7.2C16.8 6 14.8 4 12 4z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+      <div className="message-bubble assistant-bubble">
         {message.loading ? (
           <div className="typing-indicator" aria-label="Loading response">
             <span /><span /><span />
           </div>
         ) : (
           <>
-            <p className="message-text">{message.content}</p>
-            {!isUser && message.sources && <SourceList sources={message.sources} />}
+            <p className="message-text">
+              {renderAnswerWithCitations(message.content, handleCitationClick)}
+            </p>
+            {confidencePct != null && message.status !== 'out_of_scope' && (
+              <p className="confidence-badge" aria-label={`Confidence ${confidencePct}`}>
+                Confidence: <strong>{confidencePct}</strong>
+              </p>
+            )}
+            {message.sources?.length > 0 && (
+              <div className="sources-block">
+                <h4 className="sources-title">Supporting Sources</h4>
+                <ul className="sources-list">
+                  {message.sources.map((source) => (
+                    <SourceCard
+                      key={source.citation_id}
+                      source={source}
+                      highlighted={String(highlightedId) === String(source.citation_id)}
+                    />
+                  ))}
+                </ul>
+              </div>
+            )}
+            {message.additionalSources?.length > 0 && (
+              <div className="sources-block sources-additional">
+                <h4 className="sources-title">Additional Retrieved Sources</h4>
+                <ul className="sources-list">
+                  {message.additionalSources.map((source) => (
+                    <SourceCard key={`add-${source.citation_id}`} source={source} highlighted={false} />
+                  ))}
+                </ul>
+              </div>
+            )}
           </>
         )}
       </div>
     </div>
   )
+}
+
+function MessageBubble({ message }) {
+  if (message.role === 'user') {
+    return (
+      <div className="message-row user">
+        <div className="message-bubble user-bubble">
+          <p className="message-text">{message.content}</p>
+        </div>
+      </div>
+    )
+  }
+  return <AssistantMessage message={message} />
 }
 
 export default function ChatPage() {
@@ -98,9 +179,16 @@ export default function ChatPage() {
       const data = await res.json()
       setMessages((prev) => [
         ...prev.slice(0, -1),
-        { role: 'assistant', content: data.answer, sources: data.sources },
+        {
+          role: 'assistant',
+          content: data.answer,
+          sources: data.sources,
+          additionalSources: data.additional_sources,
+          confidence: data.confidence,
+          status: data.status,
+        },
       ])
-    } catch (err) {
+    } catch {
       setMessages((prev) => [
         ...prev.slice(0, -1),
         {
