@@ -5,3 +5,6 @@ rank_bm25
 numpy
 groq
 python-dotenv
+fastapi
+uvicorn[standard]
+pydantic
