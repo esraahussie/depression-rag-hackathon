@@ -7,8 +7,8 @@ CHROMA_FOLDER = f"{OUTPUT_FOLDER}/chroma_db"
 COLLECTION_NAME = "depression_clinical"
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 
-HIGH_CONFIDENCE_THRESHOLD = 0.6
-MEDIUM_CONFIDENCE_THRESHOLD = 0.4
+MIN_RETRIEVE_SCORE = 0.53
+HIGH_CONFIDENCE_THRESHOLD = 0.68
 
 EXAMPLE_QUERIES = [
     "Should adults be screened for depression?",
@@ -199,9 +199,39 @@ def load_collection():
 def confidence_from_similarity(similarity):
     if similarity >= HIGH_CONFIDENCE_THRESHOLD:
         return "High confidence", "confidence-high"
-    if similarity >= MEDIUM_CONFIDENCE_THRESHOLD:
+    if similarity >= MIN_RETRIEVE_SCORE:
         return "Medium confidence", "confidence-medium"
-    return "Low confidence", "confidence-low"
+    return "Below confidence gate", "confidence-low"
+
+
+def format_page_range(meta):
+    start = meta.get("page_start") or meta.get("page_number")
+    end = meta.get("page_end") or start
+    if not start:
+        return "N/A"
+    return str(start) if start == end else f"{start}\u2013{end}"
+
+
+def format_citation_html(meta):
+    organization = meta.get("organization") or ""
+    guideline_id = meta.get("guideline_id") or ""
+    doc_title = meta.get("doc_title") or meta.get("source_file", "unknown")
+    section = meta.get("section_title") or "Unspecified"
+    year = meta.get("year") or ""
+    source_url = meta.get("source_url") or ""
+    page_range = format_page_range(meta)
+
+    org_line = " · ".join(x for x in [organization, guideline_id, str(year) if year else ""] if x)
+    org_html = f" · {org_line}" if org_line else ""
+    link_html = f'<br><a href="{source_url}" target="_blank">{source_url}</a>' if source_url else ""
+
+    return (
+        f'<div class="citation-line">'
+        f'<b>{doc_title}</b>{org_html}<br>'
+        f'Page {page_range} · Section: {section}'
+        f'{link_html}'
+        f'</div>'
+    )
 
 
 def run_search(collection, query, n_results, source_filter):
@@ -242,10 +272,10 @@ def generate_answer(query, evidence_results):
     citation_lines = []
     excerpt_lines = []
     for text, meta, distance in evidence_results[:3]:
-        source = meta.get("source_file", "unknown")
-        page = meta.get("page_number", "N/A")
-        citation_lines.append(f"{source}, page {page}")
-        excerpt_lines.append(f"> {text[:300]}{'...' if len(text) > 300 else ''}\n— *{source}, page {page}*")
+        source = meta.get("doc_title") or meta.get("source_file", "unknown")
+        page_range = format_page_range(meta)
+        citation_lines.append(f"{source}, page {page_range}")
+        excerpt_lines.append(f"> {text[:300]}{'...' if len(text) > 300 else ''}\n— *{source}, page {page_range}*")
 
     placeholder_answer = (
         "**⚠️ LLM not connected yet.** Showing the raw retrieved evidence below instead of a generated answer.\n\n"
@@ -305,18 +335,16 @@ with tab_search:
                 similarity = 1 - distance
                 label, badge_class = confidence_from_similarity(similarity)
 
-                st.markdown(f"""
-                <div class="evidence-card">
-                    <span class="rank-badge">{rank}</span>
-                    <span class="confidence-badge {badge_class}">{label}</span>
-                    <span class="similarity-tag">similarity {similarity:.2f}</span>
-                    <div class="citation-line">
-                        <b>{meta.get('source_file', 'unknown')}</b> · page {meta.get('page_number', 'N/A')}
-                        · chunk {meta.get('chunk_index_in_page', 'N/A')} on that page
-                    </div>
-                    <div class="chunk-text">{text}</div>
-                </div>
-                """, unsafe_allow_html=True)
+                card_html = (
+                    f'<div class="evidence-card">'
+                    f'<span class="rank-badge">{rank}</span>'
+                    f'<span class="confidence-badge {badge_class}">{label}</span>'
+                    f'<span class="similarity-tag">similarity {similarity:.2f}</span>'
+                    f'{format_citation_html(meta)}'
+                    f'<div class="chunk-text">{text}</div>'
+                    f'</div>'
+                )
+                st.markdown(card_html, unsafe_allow_html=True)
 
 with tab_chat:
     st.info("🔧 LLM generation isn't connected yet. Replace `generate_answer()` with a real LLM call when it's ready — the chat UI and citation flow already work end to end.")
