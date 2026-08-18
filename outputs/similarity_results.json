@@ -1,5 +1,5 @@
 {
-  "method": "all-MiniLM-L6-v2-onnx",
+  "method": "all-MiniLM-L6-v2",
   "n_chunks": 810,
   "min_retrieve_score": 0.53,
   "queries": [
@@ -18,6 +18,7 @@
           "page_start": 36,
           "page_end": 36,
           "section_title": "Appendix: Assessing depression and its severity",
+          "source_url": "https://www.nice.org.uk/guidance/cg91",
           "text_preview": "In this guideline, the assessment of depression is based on the criteria in DSM-IV.\nAssessment should include the number and severity of symptoms, duration of the current\nepisode, and the course of the illness.\nKey symptoms:\n• persistent sadness or low mood and/or\n• marked loss o"
         },
         {
@@ -32,6 +33,7 @@
           "page_start": 39,
           "page_end": 39,
           "section_title": "Context",
+          "source_url": "https://www.nice.org.uk/guidance/cg91",
           "text_preview": "classification system requires at least 4 out of 10 depressive symptoms, whereas the DSM\nIV system requires at least 5 out of 9 for a diagnosis of major depression (referred to in\nthis guideline as 'depression'). Symptoms should be present for at least 2 weeks and each\nsymptom sh"
         },
         {
@@ -46,6 +48,7 @@
           "page_start": 7,
           "page_end": 7,
           "section_title": "Recommendations",
+          "source_url": "https://www.nice.org.uk/guidance/ng222",
           "text_preview": "Definitions of depression and severity\nDepression refers to a wide range of mental health problems characterised by the\nabsence of a positive affect (a loss of interest and enjoyment in ordinary things and\nexperiences), low mood and a range of associated emotional, cognitive, phy"
         },
         {
@@ -60,6 +63,7 @@
           "page_start": 85,
           "page_end": 85,
           "section_title": "Depression",
+          "source_url": "https://www.nice.org.uk/guidance/ng222",
           "text_preview": "• beliefs of low self-worth or excessive or inappropriate guilt\n• hopelessness about the future\n• recurrent thoughts of death or suicidal ideation or evidence of attempted suicide\n• significantly disrupted sleep or excessive sleep\n• significant changes in appetite or weight\n• psy"
         },
         {
@@ -74,6 +78,7 @@
           "page_start": 44,
           "page_end": 44,
           "section_title": "Context",
+          "source_url": "https://www.nice.org.uk/guidance/ng134",
           "text_preview": "This guideline covers the identification and treatment of depression in children (5 to\n11 years) and young people (12 to 18 years) in primary, community and secondary care.\nDepression is a broad diagnosis that can include different symptoms in different people.\nHowever, depressed"
         }
       ]
@@ -93,6 +98,7 @@
           "page_start": 69,
           "page_end": 69,
           "section_title": "1.10 Chronic depressive symptoms",
+          "source_url": "https://www.nice.org.uk/guidance/ng222",
           "text_preview": "Be aware that people presenting with chronic depressive symptoms may not\n1.10.1\nhave sought treatment for depression previously and may be unaware that they\nhave depression. Discussions about their mood and symptoms initiated by a\nhealthcare practitioner may help them access trea"
         },
         {
@@ -107,6 +113,7 @@
           "page_start": 97,
           "page_end": 97,
           "section_title": "Treatment for a new episode of less severe depression",
+          "source_url": "https://www.nice.org.uk/guidance/ng222",
           "text_preview": "advised that selective serotonin reuptake inhibitors (SSRIs) would be the preferred\nantidepressants to use in people with less severe depression because of their safety and\ntolerability. The committee discussed that as the evidence suggested that some\npsychological therapies were"
         },
         {
@@ -121,6 +128,7 @@
           "page_start": 90,
           "page_end": 90,
           "section_title": "6 First-line treatment of less severe depression",
+          "source_url": "https://www.nice.org.uk/guidance/ng222",
           "text_preview": "Is peer support an effective and cost-effective treatment in improving outcomes, including\nsymptoms, personal and social functioning and quality of life in adults as a stand-alone\ntreatment in people with less severe depression and as an adjunct to other evidencebased treatments "
         },
         {
@@ -135,6 +143,7 @@
           "page_start": 34,
           "page_end": 34,
           "section_title": "and psychodynamic psychotherapy",
+          "source_url": "https://www.nice.org.uk/guidance/ng134",
           "text_preview": "What is the clinical and cost effectiveness, post-treatment and at longer-term follow-up,\nof family therapy, psychodynamic psychotherapy and interpersonal psychotherapy for\nadolescents (IPT-A) compared with each other and with individual CBT in young people\naged 12 to 18 years wi"
         },
         {
@@ -149,6 +158,7 @@
           "page_start": 71,
           "page_end": 71,
           "section_title": "1.10 Chronic depressive symptoms",
+          "source_url": "https://www.nice.org.uk/guidance/ng222",
           "text_preview": "psychological therapy; this should be done by trained volunteers, typically\nwith at least weekly contact for between 2 to 6 months\n• a rehabilitation programme, if their depression has led to loss of work or their\nwithdrawing from social activities over the longer term. [2009, am"
         }
       ]
@@ -168,6 +178,7 @@
           "page_start": 6,
           "page_end": 6,
           "section_title": "Supporting Evidence",
+          "source_url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-depression-suicide-risk-children-adolescents",
           "text_preview": "USPSTF did not identify any studies that used the most common\nscreening instrument in clinical practice, the PHQ-9.1 The Center for\nEpidemiologic Studies Depression Scale (2 included studies) is also\nused for screening in practice but does not include items that assess suicidalit"
         },
         {
@@ -182,6 +193,7 @@
           "page_start": 6,
           "page_end": 6,
           "section_title": "Supporting Evidence",
+          "source_url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-depression-suicide-risk-adults",
           "text_preview": "Accuracy of Screening Tests\nThe USPSTF examined evidence on the most widely used or recommended screening tools for depression: PHQ, any version; CES-D;\nEPDS for perinatal persons; and GDS for older adults.1,58\nThe USPSTF found 14 primary studies (n = 8819) and 10 existing system"
         },
         {
@@ -196,6 +208,7 @@
           "page_start": 4,
           "page_end": 4,
           "section_title": "Practice Considerations",
+          "source_url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-depression-suicide-risk-children-adolescents",
           "text_preview": "engagement with mental health services, adverse childhood experiences can result in high levels of unmet need in Black youth.13-17\nSimilar patterns of historic trauma, adverse childhood experiences, and substance abuse may also explain higher rates of mental health disorders in N"
         },
         {
@@ -210,6 +223,7 @@
           "page_start": 7,
           "page_end": 7,
           "section_title": "Recommendations",
+          "source_url": "https://www.nice.org.uk/guidance/ng222",
           "text_preview": "Definitions of depression and severity\nDepression refers to a wide range of mental health problems characterised by the\nabsence of a positive affect (a loss of interest and enjoyment in ordinary things and\nexperiences), low mood and a range of associated emotional, cognitive, phy"
         },
         {
@@ -224,6 +238,7 @@
           "page_start": 3,
           "page_end": 3,
           "section_title": "Practice Considerations",
+          "source_url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-depression-suicide-risk-adults",
           "text_preview": "Screening instruments for suicide risk include the Beck Hopelessness Scale, the SAD PERSONS Scale (Sex, Age, Depression,\nPrevious attempt, Ethanol abuse, Rational thinking loss, Social supports lacking, Organized plan, No spouse, Sickness), and the SAFE-T\n(Suicide Assessment Five"
         }
       ]

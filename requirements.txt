@@ -2,3 +2,9 @@ pymupdf>=1.24.0
 pdfplumber
 chromadb
 sentence-transformers
+onnxruntime
+huggingface_hub
+tokenizers
+numpy
+scikit-learn
+anthropic

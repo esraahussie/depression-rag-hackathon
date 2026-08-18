@@ -5,14 +5,14 @@ Out-of-scope items are excluded from mean Precision@K (they are failure cases).
 
 ## Chunk settings compared
 
-| Setting | Chunks | Strategy | Precision@3 | Precision@5 | Mean Top-1 |
-|---|---:|---|---:|---:|---:|
-| 500 chars / 15% overlap | 1203 | semantic | 0.762 | 0.671 | 0.698 |
-| 500 chars / 15% overlap | 1203 | keyword | 0.714 | 0.571 | 0.688 |
-| 500 chars / 15% overlap | 1203 | hybrid | 0.786 | 0.600 | 0.693 |
-| 900 chars / 13% overlap | 810 | semantic **best** | 0.810 | 0.700 | 0.676 |
-| 900 chars / 13% overlap | 810 | keyword | 0.619 | 0.557 | 0.656 |
-| 900 chars / 13% overlap | 810 | hybrid | 0.714 | 0.600 | 0.662 |
+| Setting | Chunks | Strategy | Precision@3 | Precision@5 | Precision@10 | Mean Top-1 |
+|---|---:|---|---:|---:|---:|---:|
+| 500 chars / 15% overlap | 1203 | semantic | 0.762 | 0.671 | 0.557 | 0.698 |
+| 500 chars / 15% overlap | 1203 | keyword | 0.714 | 0.571 | 0.436 | 0.688 |
+| 500 chars / 15% overlap | 1203 | hybrid | 0.786 | 0.600 | 0.529 | 0.693 |
+| 900 chars / 13% overlap | 810 | semantic **best** | 0.810 | 0.700 | 0.550 | 0.676 |
+| 900 chars / 13% overlap | 810 | keyword | 0.619 | 0.557 | 0.457 | 0.656 |
+| 900 chars / 13% overlap | 810 | hybrid | 0.714 | 0.600 | 0.507 | 0.662 |
 
 **Chosen setup:** 900 chars / 13% overlap with **semantic** search, starting Top-K = 5.
 
@@ -41,4 +41,12 @@ Do not use `rag_pipeline_simple.py` for this stage.
 
 ## Top-K note
 
-Inspect Top-3, Top-5, and Top-10 on the evidence panel. Use Top-5 as the default: Top-3 misses some paraphrases; Top-10 adds off-section noise.
+Measured (not just inspected) on the chosen setup (900 chars / 13% overlap + semantic):
+
+| K | Precision@K |
+|---:|---:|
+| 3 | 0.810 |
+| 5 | 0.700 |
+| 10 | 0.550 |
+
+Top-3 (0.810) misses some paraphrases that Top-5 (0.700) catches. Top-10 (0.550) is lower than Top-5, confirming extra slots mostly add off-section noise rather than new relevant evidence. Top-5 stays the default passed to generation.
