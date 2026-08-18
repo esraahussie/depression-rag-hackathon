@@ -2,6 +2,8 @@ import streamlit as st
 import chromadb
 from chromadb.utils import embedding_functions
 
+from day3_generation import generate_answer as generate_grounded_answer
+
 OUTPUT_FOLDER = "outputs"
 CHROMA_FOLDER = f"{OUTPUT_FOLDER}/chroma_db"
 COLLECTION_NAME = "depression_clinical"
@@ -261,32 +263,57 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-def generate_answer(query, evidence_results):
-    if not evidence_results:
-        return {
-            "answer": "No relevant evidence was found in the indexed guidelines for this question. This may be out of scope for the current document set.",
-            "confidence": "Insufficient Evidence",
-            "citations": [],
-        }
+CONFIDENCE_BADGE_CLASS = {
+    "High": "confidence-high",
+    "Medium": "confidence-medium",
+    "Low": "confidence-low",
+    "Insufficient Evidence": "confidence-low",
+}
 
-    citation_lines = []
-    excerpt_lines = []
-    for text, meta, distance in evidence_results[:3]:
-        source = meta.get("doc_title") or meta.get("source_file", "unknown")
-        page_range = format_page_range(meta)
-        citation_lines.append(f"{source}, page {page_range}")
-        excerpt_lines.append(f"> {text[:300]}{'...' if len(text) > 300 else ''}\n— *{source}, page {page_range}*")
 
-    placeholder_answer = (
-        "**⚠️ LLM not connected yet.** Showing the raw retrieved evidence below instead of a generated answer.\n\n"
-        + "\n\n".join(excerpt_lines)
+def render_structured_answer(answer):
+    """Render the Step 2 answer schema (recommendation, supporting_evidence,
+    citations, confidence, disclaimer) from day3_generation.generate_answer()
+    as markdown for st.chat_message. Every claim shown here is traceable to
+    the citations block below it (Day 3, Step 3/4)."""
+    confidence = answer.get("confidence") or "Insufficient Evidence"
+    badge_class = CONFIDENCE_BADGE_CLASS.get(confidence, "confidence-low")
+    method = answer.get("_generation_method", "unknown")
+    method_label = "LLM-generated" if method == "llm" else "Extractive fallback (no LLM key set)"
+
+    lines = [
+        f'<span class="confidence-badge {badge_class}">{confidence}</span> '
+        f'<span class="similarity-tag">{method_label} · {answer.get("n_hits", 0)} chunks retrieved</span>',
+        "",
+    ]
+
+    recommendation = answer.get("recommendation")
+    if recommendation:
+        lines.append(recommendation)
+    else:
+        lines.append(
+            "_The retrieved guidelines do not provide sufficient evidence to answer "
+            "this question reliably. Please consult the relevant clinical guideline "
+            "or a qualified clinician._"
+        )
+
+    citations = answer.get("citations") or []
+    if citations:
+        lines.append("\n**Citations**")
+        for c in citations:
+            doc = c.get("document_name") or "Unknown source"
+            section = c.get("section_title") or "Unspecified"
+            page = c.get("page") or "N/A"
+            score = c.get("retrieval_score")
+            score_str = f" · score {score:.2f}" if isinstance(score, (int, float)) else ""
+            lines.append(f"- {doc} — *{section}*, p.{page}{score_str}")
+
+    disclaimer = answer.get("disclaimer") or (
+        "This is guideline-derived support information, not a substitute for clinical judgment."
     )
+    lines.append(f"\n*{disclaimer}*")
 
-    return {
-        "answer": placeholder_answer,
-        "confidence": "N/A — placeholder",
-        "citations": citation_lines,
-    }
+    return "\n".join(lines)
 
 
 if total_chunks == 0:
@@ -347,14 +374,18 @@ with tab_search:
                 st.markdown(card_html, unsafe_allow_html=True)
 
 with tab_chat:
-    st.info("🔧 LLM generation isn't connected yet. Replace `generate_answer()` with a real LLM call when it's ready — the chat UI and citation flow already work end to end.")
+    st.info(
+        "Answers are generated only from retrieved guideline chunks (Groq LLM if "
+        "`GROQ_API_KEY` is set, otherwise an extractive fallback). Every claim below "
+        "should be traceable to the citations listed under it."
+    )
 
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []
 
     for message in st.session_state.chat_history:
         with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+            st.markdown(message["content"], unsafe_allow_html=True)
 
     user_message = st.chat_input("Ask a question about the indexed guidelines...")
 
@@ -364,12 +395,16 @@ with tab_chat:
             st.markdown(user_message)
 
         with st.chat_message("assistant"):
-            with st.spinner("Retrieving evidence..."):
-                evidence_results = run_search(collection, user_message, n_results, source_filter)
-                response = generate_answer(user_message, evidence_results)
-            st.markdown(response["answer"])
+            with st.spinner("Retrieving evidence and generating a grounded answer..."):
+                # NOTE: generate_grounded_answer() does its own retrieval via
+                # day3_generation.retrieve_context() (same Chroma collection,
+                # same MIN_RETRIEVE_SCORE gate). The source_filter multiselect
+                # in the sidebar only applies to the Evidence Search tab for now.
+                answer = generate_grounded_answer(user_message, k=n_results)
+            rendered = render_structured_answer(answer)
+            st.markdown(rendered, unsafe_allow_html=True)
 
-        st.session_state.chat_history.append({"role": "assistant", "content": response["answer"]})
+        st.session_state.chat_history.append({"role": "assistant", "content": rendered})
 
 st.markdown("""
 <div class="disclaimer-box">
