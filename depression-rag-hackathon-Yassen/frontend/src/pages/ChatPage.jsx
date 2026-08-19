@@ -50,14 +50,14 @@ function SourceCard({ source, highlighted }) {
         <span className="source-citation-id">[{source.citation_id}]</span>
         <span className="source-name">{source.name}</span>
       </div>
-      <dl className="source-meta">
-        <div><dt>PDF</dt><dd>{source.pdf}</dd></div>
-        <div><dt>Page</dt><dd>{page}</dd></div>
-        <div><dt>Chunk</dt><dd>{chunk}</dd></div>
+      <p className="source-filename">{source.pdf}</p>
+      <div className="source-meta">
+        <span className="source-meta-badge">Page {page}</span>
+        <span className="source-meta-badge">Chunk {chunk}</span>
         {relevance != null && (
-          <div><dt>Relevance</dt><dd>{relevance}</dd></div>
+          <span className="source-meta-badge source-meta-relevance">Relevance {relevance}</span>
         )}
-      </dl>
+      </div>
     </li>
   )
 }
@@ -149,7 +149,10 @@ function AssistantMessage({ message, messageId, speech, autoSpeak }) {
 
   const handleCitationClick = (id) => {
     setHighlightedId(id)
-    document.getElementById(`source-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    const sourceEl = document.getElementById(`source-${id}`)
+    const detailsEl = sourceEl?.closest('details')
+    if (detailsEl && !detailsEl.open) detailsEl.open = true
+    sourceEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     setTimeout(() => setHighlightedId(null), 2000)
   }
 
@@ -173,7 +176,7 @@ function AssistantMessage({ message, messageId, speech, autoSpeak }) {
           />
         </svg>
       </div>
-      <div className="message-bubble assistant-bubble">
+      <div className={`message-bubble assistant-bubble ${message.loading ? 'assistant-bubble-loading' : ''}`}>
         {message.loading ? (
           <div className="typing-indicator" aria-label="Loading response">
             <span /><span /><span />
@@ -192,8 +195,11 @@ function AssistantMessage({ message, messageId, speech, autoSpeak }) {
               </p>
             )}
             {message.sources?.length > 0 && (
-              <div className="sources-block">
-                <h4 className="sources-title">Supporting Sources</h4>
+              <details className="sources-block">
+                <summary className="sources-title">
+                  Supporting Sources
+                  <span className="sources-count">{message.sources.length}</span>
+                </summary>
                 <ul className="sources-list">
                   {message.sources.map((source) => (
                     <SourceCard
@@ -203,17 +209,20 @@ function AssistantMessage({ message, messageId, speech, autoSpeak }) {
                     />
                   ))}
                 </ul>
-              </div>
+              </details>
             )}
             {message.additionalSources?.length > 0 && (
-              <div className="sources-block sources-additional">
-                <h4 className="sources-title">Additional Retrieved Sources</h4>
+              <details className="sources-block sources-additional">
+                <summary className="sources-title">
+                  Additional Retrieved Sources
+                  <span className="sources-count">{message.additionalSources.length}</span>
+                </summary>
                 <ul className="sources-list">
                   {message.additionalSources.map((source) => (
                     <SourceCard key={`add-${source.citation_id}`} source={source} highlighted={false} />
                   ))}
                 </ul>
-              </div>
+              </details>
             )}
           </>
         )}
@@ -284,9 +293,9 @@ function useSpeechRecognition(onResult) {
 
 export default function ChatPage() {
   const [messages, setMessages] = React.useState([])
+  const [autoSpeak, setAutoSpeak] = React.useState(false)
   const [input, setInput] = React.useState('')
   const [isLoading, setIsLoading] = React.useState(false)
-  const [autoSpeak, setAutoSpeak] = React.useState(false)
   const chatEndRef = React.useRef(null)
   const inputRef = React.useRef(null)
   const speech = useSpeechSynthesis()
