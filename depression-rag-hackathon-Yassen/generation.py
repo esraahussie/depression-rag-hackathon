@@ -10,6 +10,7 @@ import re
 from settings import GENERATION_MODEL, GENERATION_SYSTEM_PROMPT
 from citations import build_context_with_citations, build_source_legend
 from config import client
+from language import GENERATION_SYSTEM_PROMPT_ARZ, localize_extractive_answer
 from retrieval import simple_tokenize
 
 
@@ -59,18 +60,38 @@ def generate_extractive_answer(query: str, cited_results: list[dict]) -> str:
     return " ".join(parts)
 
 
-def generate_groq_answer(query: str, cited_results: list[dict], model: str = GENERATION_MODEL) -> str:
+def generate_groq_answer(
+    query: str,
+    cited_results: list[dict],
+    model: str = GENERATION_MODEL,
+    response_language: str = "en",
+    display_query: str | None = None,
+) -> str:
     context_block = build_context_with_citations(cited_results)
     source_legend = build_source_legend(cited_results)
     valid_ids = ", ".join(str(r["citation_id"]) for r in cited_results)
+    arabic = response_language == "arz"
+    system_prompt = GENERATION_SYSTEM_PROMPT_ARZ if arabic else GENERATION_SYSTEM_PROMPT
+    question_text = display_query or query
+    answer_instruction = (
+        f"جاوب بالمصري العامي القاهري باستخدام الفقرات فوق بس — مش فصحى. "
+        f"حط [n] بعد كل معلومة، و n لازم تكون واحدة من: {valid_ids}. متستخدمش رقم تاني. "
+        f"متترجمش الفقرات حرفي؛ لخّص المعنى الطبي بالمصري. "
+        f"متستخدمش ** ولا * ولا أي ماركداون."
+        if arabic
+        else (
+            f"Answer using ONLY the passages above. Cite every claim with [n] where n is "
+            f"one of: {valid_ids}. Do NOT use any other citation number. "
+            f"Do not use markdown (no **bold**, no *asterisks*, no headings)."
+        )
+    )
 
     user_prompt = (
         f"Source Index (ONLY these citation IDs exist: {valid_ids}):\n"
         f"{source_legend}\n\n"
         f"Context passages:\n\n{context_block}\n\n"
-        f"Question: {query}\n\n"
-        f"Answer using ONLY the passages above. Cite every claim with [n] where n is "
-        f"one of: {valid_ids}. Do NOT use any other citation number."
+        f"Question: {question_text}\n\n"
+        f"{answer_instruction}"
     )
 
     response = client.chat.completions.create(
@@ -78,25 +99,43 @@ def generate_groq_answer(query: str, cited_results: list[dict], model: str = GEN
         max_tokens=1000,
         temperature=0,
         messages=[
-            {"role": "system", "content": GENERATION_SYSTEM_PROMPT},
+            {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ],
     )
     return response.choices[0].message.content
 
 
-def generate_answer(query: str, cited_results: list[dict], model: str = GENERATION_MODEL) -> str:
+def generate_answer(
+    query: str,
+    cited_results: list[dict],
+    model: str = GENERATION_MODEL,
+    response_language: str = "en",
+    display_query: str | None = None,
+) -> str:
     """
     Generate an answer from pre-numbered retrieval results.
     Uses Groq when configured; falls back to extractive sentence selection.
+
+    `query` is the English retrieval query (needed for extractive overlap).
+    `display_query` is the original user question, used in the LLM prompt.
     """
     if not cited_results:
         return ""
 
     if client is not None:
         try:
-            return generate_groq_answer(query, cited_results, model=model)
+            return generate_groq_answer(
+                query,
+                cited_results,
+                model=model,
+                response_language=response_language,
+                display_query=display_query,
+            )
         except Exception:
             pass
 
-    return generate_extractive_answer(query, cited_results)
+    extractive = generate_extractive_answer(query, cited_results)
+    if response_language == "arz":
+        return localize_extractive_answer(extractive)
+    return extractive

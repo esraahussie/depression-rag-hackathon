@@ -31,6 +31,9 @@ def main():
                          help="Number of chunks to retrieve/cite per query (default: 5).")
     parser.add_argument("--no-gate", action="store_true",
                          help="Disable the relevance gate (return results even below RERANK_RELEVANCE_THRESHOLD).")
+    parser.add_argument("--language", default="auto",
+                         choices=["auto", "en", "arz"],
+                         help="Response language: auto (detect), en, or arz (Egyptian Arabic).")
     args = parser.parse_args()
 
     index = load_or_build_index(force_rebuild=args.rebuild)
@@ -43,6 +46,7 @@ def main():
 
     if args.query:
         result = ask(index, args.query, n_results=args.n_results,
+                     language=args.language,
                      use_relevance_gate=not args.no_gate)
         print(f"\nAnswer:\n{result['answer']}")
         print(f"Confidence: {result['confidence']:.0%}  Status: {result['status']}")
@@ -53,6 +57,8 @@ def main():
                 chunk = s["chunk"] if s["chunk"] is not None else "N/A"
                 rel = f"{s['relevance_score']:.2f}" if s["relevance_score"] is not None else "N/A"
                 print(f"  [{s['citation_id']}] {s['name']} | PDF: {s['pdf']} | Page: {page} | Chunk: {chunk} | Relevance: {rel}")
+                if s.get("source_url"):
+                    print(f"      {s['source_url']}")
         print_readable_references(result["results"])
         return
 
@@ -68,6 +74,7 @@ def main():
             break
 
         result = ask(index, query, n_results=args.n_results,
+                       language=args.language,
                        use_relevance_gate=not args.no_gate)
         print(f"\nAnswer:\n{result['answer']}")
         print(f"Confidence: {result['confidence']:.0%}  Status: {result['status']}")
@@ -78,6 +85,8 @@ def main():
                 chunk = s["chunk"] if s["chunk"] is not None else "N/A"
                 rel = f"{s['relevance_score']:.2f}" if s["relevance_score"] is not None else "N/A"
                 print(f"  [{s['citation_id']}] {s['name']} | PDF: {s['pdf']} | Page: {page} | Chunk: {chunk} | Relevance: {rel}")
+                if s.get("source_url"):
+                    print(f"      {s['source_url']}")
         print_readable_references(result["results"])
 
 

@@ -12,6 +12,14 @@ from ingest import (
 )
 from retrieval import hybrid_search
 from generation import generate_answer
+from language import (
+    INSUFFICIENT_EVIDENCE_AR,
+    OUT_OF_SCOPE_AR,
+    contains_arabic,
+    localize_extractive_answer,
+    resolve_language,
+    translate_to_english,
+)
 from relevance import (
     classify_retrieval,
     OUT_OF_SCOPE_MESSAGE,
@@ -68,37 +76,56 @@ def _empty_response(status: str, message: str) -> dict:
     }
 
 
-def ask(index, query, n_results=5, **search_kwargs) -> dict:
+def _status_message(status: str, response_language: str) -> str:
+    arabic = response_language == "arz"
+    if status == "out_of_scope":
+        return OUT_OF_SCOPE_AR if arabic else OUT_OF_SCOPE_MESSAGE
+    return INSUFFICIENT_EVIDENCE_AR if arabic else INSUFFICIENT_EVIDENCE_MESSAGE
+
+
+def ask(index, query, n_results=5, language="auto", **search_kwargs) -> dict:
     """
     End-to-end RAG: retrieve → relevance gate → generate → validate citations → score.
 
-    Returns a dict with answer, confidence, sources, additional_sources, status, results.
+    Arabic questions are translated to English for retrieval; answers can be
+    returned in Egyptian Arabic. Returns a dict with answer, confidence, sources,
+    additional_sources, status, results.
     """
     collection, bm25_index, chunk_texts, chunk_ids, metadata_list = index
+    response_language = resolve_language(query, language)
+    retrieval_query = translate_to_english(query) if contains_arabic(query) else query
 
     raw_results = hybrid_search(
         collection, bm25_index, chunk_texts, chunk_ids, metadata_list,
-        query, n_results=n_results, verbose=False, **search_kwargs,
+        retrieval_query, n_results=n_results, verbose=False, **search_kwargs,
     )
 
-    classification = classify_retrieval(query, raw_results)
+    # Score against the English retrieval query; keep original text so Arabic
+    # mental-health / off-topic patterns still fire if translation is imperfect.
+    gate_query = (
+        retrieval_query
+        if retrieval_query == query
+        else f"{retrieval_query}\n{query}"
+    )
+    classification = classify_retrieval(gate_query, raw_results)
     status = classification["status"]
     relevant_results = classification["relevant_results"]
 
     if status == "out_of_scope":
-        return _empty_response("out_of_scope", OUT_OF_SCOPE_MESSAGE)
+        return _empty_response("out_of_scope", _status_message("out_of_scope", response_language))
 
     numbered = assign_citation_ids(relevant_results)
     valid_id_set = {r["citation_id"] for r in numbered}
 
     if status == "insufficient":
+        insufficient_msg = _status_message("insufficient", response_language)
         return {
-            "answer": INSUFFICIENT_EVIDENCE_MESSAGE,
+            "answer": insufficient_msg,
             "confidence": compute_confidence(
                 status=status,
                 relevant_results=numbered,
                 cited_results=[],
-                answer=INSUFFICIENT_EVIDENCE_MESSAGE,
+                answer=insufficient_msg,
                 valid_citation_ids=set(),
             ),
             "status": "insufficient",
@@ -107,9 +134,14 @@ def ask(index, query, n_results=5, **search_kwargs) -> dict:
             "results": [],
         }
 
-    answer = generate_answer(query, numbered)
+    answer = generate_answer(
+        retrieval_query,
+        numbered,
+        response_language=response_language,
+        display_query=query,
+    )
     if not answer.strip():
-        return _empty_response("insufficient", INSUFFICIENT_EVIDENCE_MESSAGE)
+        return _empty_response("insufficient", _status_message("insufficient", response_language))
 
     cleaned_answer, used_ids = validate_and_clean_citations(answer, valid_id_set)
     cited_chunks = filter_cited_sources(numbered, used_ids)
@@ -121,6 +153,8 @@ def ask(index, query, n_results=5, **search_kwargs) -> dict:
         snippet = top.get("text", "")[:500].strip()
         if snippet:
             cleaned_answer = f"{snippet} [1]"
+            if response_language == "arz":
+                cleaned_answer = localize_extractive_answer(cleaned_answer)
             used_ids = {1}
             cited_chunks = [top]
             additional = numbered[1:]

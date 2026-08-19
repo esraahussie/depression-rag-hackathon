@@ -34,6 +34,8 @@ _OFF_TOPIC_PATTERNS = [
     re.compile(r"\bhow (do|to) (i )?cook\b", re.I),
     re.compile(r"\brecipe for\b", re.I),
     re.compile(r"\bweather in\b", re.I),
+    re.compile(r"عاصمة\s+\w+", re.I),
+    re.compile(r"نكتة|طبق|طبخ|وصفة|الطقس|كورة|مباراة", re.I),
 ]
 
 _MENTAL_HEALTH_HINTS = re.compile(
@@ -41,7 +43,9 @@ _MENTAL_HEALTH_HINTS = re.compile(
     r"medication|antidepress|screening|diagnos|psychiatric|psycholog|clinical|"
     r"disorder|sadness|hopeless|sleep|appetite|self.?harm|crisis|support|"
     r"guideline|who|nice|patient|caregiver|child|adolescent|adult|bipolar|"
-    r"lithium|dosage|dose|prescri)\b",
+    r"lithium|dosage|dose|prescri)\b"
+    r"|اكتئاب|قلق|نفسي|نفسية|حزن|علاج|أعراض|دواء|مضاد.*اكتئاب|"
+    r"نوم|شهية|انتحار|إيذاء|فحص|تشخيص|مريض|طفل|مراهق|بالغ",
     re.I,
 )
 

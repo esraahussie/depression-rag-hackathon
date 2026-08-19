@@ -63,12 +63,20 @@ function renderSourceCard(source, prefix = '') {
   const chunk = source.chunk != null ? source.chunk : 'N/A'
   const relevance = formatRelevance(source.relevance_score)
   const relHtml = relevance ? `<div><dt>Relevance</dt><dd>${relevance}</dd></div>` : ''
+  const url = source.source_url || ''
+  const nameHtml = url
+    ? `<a class="source-name source-name-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.name)}</a>`
+    : `<span class="source-name">${escapeHtml(source.name)}</span>`
+  const urlHtml = url
+    ? `<a class="source-url" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Open guideline</a>`
+    : ''
   return `
     <li id="source-${source.citation_id}" class="source-item">
       <div class="source-header">
         <span class="source-citation-id">[${source.citation_id}]</span>
-        <span class="source-name">${escapeHtml(source.name)}</span>
+        ${nameHtml}
       </div>
+      ${urlHtml}
       <dl class="source-meta">
         <div><dt>PDF</dt><dd>${escapeHtml(source.pdf)}</dd></div>
         <div><dt>Page</dt><dd>${page}</dd></div>

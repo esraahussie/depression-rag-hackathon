@@ -496,6 +496,25 @@ body {
   font-weight: 500;
 }
 
+.source-name-link {
+  color: var(--color-primary-dark);
+  text-decoration: none;
+}
+
+.source-name-link:hover,
+.source-url:hover {
+  text-decoration: underline;
+}
+
+.source-url {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  text-decoration: none;
+  margin: 0.15rem 0 0.35rem;
+}
+
 .source-score {
   color: var(--color-text-light);
   font-size: 0.75rem;

@@ -1,6 +1,10 @@
 import { NavLink } from 'react-router-dom'
+import LanguageToggle from './LanguageToggle'
+import { useLanguage } from '../i18n'
 
 export default function Layout({ children }) {
+  const { t } = useLanguage()
+
   return (
     <div className="app">
       <aside className="sidebar">
@@ -16,9 +20,11 @@ export default function Layout({ children }) {
           </div>
           <div>
             <h1 className="brand-name">MindCare</h1>
-            <p className="brand-tagline">Depression support & education</p>
+            <p className="brand-tagline">{t.tagline}</p>
           </div>
         </div>
+
+        <LanguageToggle />
 
         <nav className="sidebar-nav" aria-label="Main navigation">
           <NavLink to="/chat" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
@@ -31,7 +37,7 @@ export default function Layout({ children }) {
                 strokeLinejoin="round"
               />
             </svg>
-            Chat
+            {t.chat}
           </NavLink>
           <NavLink to="/phq9" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -73,7 +79,7 @@ export default function Layout({ children }) {
 
         <div className="sidebar-status">
           <span className="status-dot" aria-hidden="true" />
-          AI Assistant · RAG-powered
+          {t.assistantStatus}
         </div>
       </aside>
 
@@ -90,9 +96,10 @@ export default function Layout({ children }) {
             </span>
             MindCare
           </div>
+          <LanguageToggle />
           <nav className="mobile-nav" aria-label="Mobile navigation">
             <NavLink to="/chat" className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}>
-              Chat
+              {t.chat}
             </NavLink>
             <NavLink to="/phq9" className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}>
               PHQ-9

@@ -31,6 +31,40 @@ USE_SEMANTIC_CHUNKING = False         # set True to use context-aware chunking i
 SEMANTIC_SIMILARITY_THRESHOLD = 0.5   # lower similarity than this = topic change = new chunk
 
 # ---------------------------------------------------------------------
+# SOURCE URLS
+# ---------------------------------------------------------------------
+
+# Maps each PDF's exact filename (as it sits in PDF_FOLDER) to the public
+# URL it was sourced from, so citations can link back to the original
+# guideline. A filename with no entry here just renders without a link.
+SOURCE_URLS = {
+    "WHOEMMNH219E-eng.pdf":
+        "https://iris.who.int/server/api/core/bitstreams/0ba3bb61-66f9-4926-abc3-60b0629f297e/content",
+    "WHOEMMNH222E-eng.pdf":
+        "https://iris.who.int/items/69cec305-c375-4832-91d4-bef1db8d5d26",
+    "anxiety-adults-screening-final-recommendation.pdf":
+        "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/anxiety-adults-screening",
+    "depression-in-adults-pdf-58302785221.pdf":
+        "https://www.nice.org.uk/guidance/qs8",
+    "depression-in-adults-treatment-and-management-pdf-66143832307909.pdf":
+        "https://www.nice.org.uk/guidance/ng222",
+    "depression-in-adults-with-a-chronic-physical-health-problem-recognition-and-management-pdf-975744316357.pdf":
+        "https://www.nice.org.uk/guidance/cg91",
+    "depression-in-children-and-young-people-identification-and-management-pdf-66141719350981.pdf":
+        "https://www.nice.org.uk/guidance/ng134",
+    "depression-in-children-and-young-people-pdf-2098673428165.pdf":
+        "https://www.nice.org.uk/guidance/qs48",
+    "depression-suicide-risk-adults-rs.pdf":
+        "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-depression-suicide-risk-adults",
+    "perinatal-depression-final-rec-statement.pdf":
+        "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/perinatal-depression-preventive-interventions",
+    "screening-anxiety-children-final-recommendation.pdf":
+        "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-anxiety-children-adolescents",
+    "screening-depression-suicide-risk-children-final-recommendation.pdf":
+        "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/screening-depression-suicide-risk-children-adolescents",
+}
+
+# ---------------------------------------------------------------------
 # EMBEDDING
 # ---------------------------------------------------------------------
 
@@ -97,5 +131,6 @@ GENERATION_SYSTEM_PROMPT = (
     "1. Every factual claim MUST end with a [n] citation matching a provided source ID.\n"
     "2. ONLY use citation IDs listed in the Source Index — never invent new numbers.\n"
     "3. If the passages lack enough information, say so explicitly. Do not guess.\n"
-    "4. Do not use outside knowledge. Do not answer off-topic questions."
+    "4. Do not use outside knowledge. Do not answer off-topic questions.\n"
+    "5. Write plain sentences. Do not use markdown (no **bold**, asterisks, or headings)."
 )

@@ -22,7 +22,7 @@
   --radius-lg: 16px;
   --radius-xl: 20px;
   --sidebar-width: 260px;
-  --font: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font: 'DM Sans', 'Cairo', system-ui, -apple-system, sans-serif;
   --transition: 0.2s ease;
 }
 
@@ -327,7 +327,7 @@ body {
   cursor: pointer;
   transition: all var(--transition);
   font-family: var(--font);
-  text-align: left;
+  text-align: start;
 }
 
 .example-btn:hover:not(:disabled) {
@@ -402,6 +402,11 @@ body {
   word-break: break-word;
   font-size: 0.9375rem;
   line-height: 1.65;
+}
+
+.message-text strong {
+  font-weight: 700;
+  color: inherit;
 }
 
 .message-text-row {
@@ -542,12 +547,38 @@ body {
   font-size: 0.875rem;
 }
 
+.source-name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.source-name-link {
+  color: var(--color-primary-dark);
+  text-decoration: none;
+}
+
+.source-name-link:hover {
+  text-decoration: underline;
+}
+
 .source-filename {
   font-size: 0.75rem;
   color: var(--color-text-light);
-  margin: 0.15rem 0 0.4rem 0;
+  margin: 0.15rem 0 0.25rem 0;
   font-family: var(--font-mono, monospace);
   word-break: break-all;
+}
+
+.source-url {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  text-decoration: none;
+  margin: 0 0 0.35rem 0;
+}
+
+.source-url:hover {
+  text-decoration: underline;
 }
 
 .source-meta {
@@ -574,6 +605,26 @@ body {
   border-color: var(--color-primary);
   background: var(--color-primary-light);
   font-weight: 600;
+}
+
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  text-decoration: none;
+}
+
+.source-link svg {
+  width: 13px;
+  height: 13px;
+}
+
+.source-link:hover {
+  text-decoration: underline;
 }
 
 .sources-additional {
@@ -1086,7 +1137,7 @@ body {
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--color-text);
-  text-align: left;
+  text-align: start;
 }
 
 .result-disclaimer {

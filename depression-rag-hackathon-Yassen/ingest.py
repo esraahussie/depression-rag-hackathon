@@ -20,7 +20,7 @@ from rank_bm25 import BM25Okapi
 from settings import (
     PDF_FOLDER, OUTPUT_FOLDER, METADATA_FILE, CORPUS_CACHE_FILE, BM25_CACHE_FILE,
     CHROMA_FOLDER, COLLECTION_NAME, EMBEDDING_MODEL, MIN_CHUNK_WORDS,
-    USE_SEMANTIC_CHUNKING,
+    USE_SEMANTIC_CHUNKING, SOURCE_URLS,
 )
 from extraction import extract_text_from_pdf
 from cleaning import clean_text
@@ -76,6 +76,7 @@ def build_chunks_and_metadata():
                 all_metadata.append({
                     "chunk_id": chunk_id,
                     "source_file": file_name,
+                    "source_url": SOURCE_URLS.get(file_name, ""),
                     "page_number": page_number,
                     "chunk_index_in_page": chunk_index_in_page,
                     "chunk_index_in_doc": doc_chunk_count,

@@ -6,6 +6,7 @@ import re
 
 from relevance import get_relevance_score
 from confidence import normalize_score
+from settings import SOURCE_URLS
 
 SOURCE_DISPLAY_NAMES = {
     "WHOEMMNH219E-eng.pdf": "WHO Clinical Depression Guide",
@@ -71,20 +72,51 @@ def get_page_number(metadata: dict) -> int | None:
     return int(page) if page is not None else None
 
 
+def resolve_source_url(source_file: str, page: int | None = None) -> str | None:
+    """Public guideline URL for a PDF filename. Looks up SOURCE_URLS — no rebuild needed."""
+    if not source_file:
+        return None
+    url = SOURCE_URLS.get(source_file)
+    if not url:
+        lower = source_file.lower()
+        url = next((v for k, v in SOURCE_URLS.items() if k.lower() == lower), None)
+    if not url:
+        stem = source_file.lower().removesuffix(".pdf")
+        matches = []
+        for key, value in SOURCE_URLS.items():
+            key_stem = key.lower().removesuffix(".pdf")
+            if key_stem in stem or stem in key_stem:
+                matches.append((len(key_stem), value))
+        if matches:
+            url = max(matches, key=lambda item: item[0])[1]
+    if not url:
+        return None
+    pdf_like = (
+        url.lower().endswith(".pdf")
+        or "/bitstreams/" in url
+        or url.lower().endswith("/content")
+    )
+    if page and pdf_like:
+        return f"{url}#page={page}"
+    return url
+
+
 def result_to_source(result: dict) -> dict:
     """Build one API source object from a cited retrieval result."""
     meta = result.get("metadata", {})
     source_file = meta.get("source_file", "unknown source")
     raw_score = get_relevance_score(result)
     norm_score = round(normalize_score(raw_score), 2) if raw_score is not None else None
+    page = get_page_number(meta)
 
     return {
         "citation_id": result["citation_id"],
         "pdf": source_file,
         "name": prettify_source_name(source_file),
-        "page": get_page_number(meta),
+        "page": page,
         "chunk": get_chunk_number(meta, result.get("chunk_id")),
         "relevance_score": norm_score,
+        "source_url": resolve_source_url(source_file, page) or meta.get("source_url") or None,
     }
 
 
@@ -108,9 +140,10 @@ def build_source_legend(results: list[dict]) -> str:
         src = result_to_source(result)
         page = src["page"] if src["page"] is not None else "N/A"
         chunk = src["chunk"] if src["chunk"] is not None else "N/A"
+        url_bit = f" | URL: {src['source_url']}" if src.get("source_url") else ""
         lines.append(
             f"[{src['citation_id']}] {src['name']} | PDF: {src['pdf']} | "
-            f"Page: {page} | Chunk: {chunk}"
+            f"Page: {page} | Chunk: {chunk}{url_bit}"
         )
     return "\n".join(lines)
 

@@ -33,6 +33,10 @@ def get_index():
 
 class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=2000)
+    language: str = Field(
+        default="auto",
+        description="en, arz (Egyptian Arabic), or auto to detect from the message.",
+    )
 
 
 class SourceItem(BaseModel):
@@ -42,6 +46,7 @@ class SourceItem(BaseModel):
     page: int | None = None
     chunk: int | None = None
     relevance_score: float | None = None
+    source_url: str | None = None
 
 
 class ChatResponse(BaseModel):
@@ -61,7 +66,12 @@ def health():
 def chat(request: ChatRequest):
     try:
         index = get_index()
-        result = ask(index, request.message.strip(), n_results=5)
+        result = ask(
+            index,
+            request.message.strip(),
+            n_results=5,
+            language=request.language,
+        )
         return ChatResponse(
             answer=result["answer"],
             confidence=result["confidence"],
