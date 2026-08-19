@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.pyc
+outputs/chroma_db/
+outputs/*.pkl
+venv/
