@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MindCare — Evidence-based depression information and support" />
+  <title>MindCare — Depression Support & Education</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 4c-2.8 0-4.8 2-4.8 4.8 0 3.2 2.4 4.4 4.8 7.2 2.4-2.8 4.8-4 4.8-7.2C16.8 6 14.8 4 12 4z" fill="currentColor"/>
+            <circle cx="12" cy="10" r="1.5" fill="white"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-name">MindCare</h1>
+          <p class="brand-tagline">Depression support & education</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="#/chat" class="nav-link" data-route="chat">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M8 10h8M8 14h5M21 12c0 3.866-3.582 7-8 7-.847 0-1.654-.12-2.4-.34L3 21l1.5-5.2C3.56 14.6 3 13.35 3 12c0-3.866 3.582-7 8-7s8 3.134 8 7z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Chat
+        </a>
+        <a href="#/phq9" class="nav-link" data-route="phq9">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          PHQ-9
+        </a>
+      </nav>
+      <div class="sidebar-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        AI Assistant · RAG-powered
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="mobile-header">
+        <div class="mobile-brand">
+          <span class="brand-icon-sm">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 4c-2.8 0-4.8 2-4.8 4.8 0 3.2 2.4 4.4 4.8 7.2 2.4-2.8 4.8-4 4.8-7.2C16.8 6 14.8 4 12 4z" fill="currentColor"/>
+            </svg>
+          </span>
+          MindCare
+        </div>
+        <nav class="mobile-nav" aria-label="Mobile navigation">
+          <a href="#/chat" class="mobile-nav-link" data-route="chat">Chat</a>
+          <a href="#/phq9" class="mobile-nav-link" data-route="phq9">PHQ-9</a>
+        </nav>
+      </header>
+      <main class="main-content" id="app-root"></main>
+    </div>
+  </div>
+  <script src="/js/app.js" type="module"></script>
+</body>
+</html>

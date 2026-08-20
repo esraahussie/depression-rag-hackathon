@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+outputs/chroma_db/
+outputs/*.pkl
+venv/
+.venv/

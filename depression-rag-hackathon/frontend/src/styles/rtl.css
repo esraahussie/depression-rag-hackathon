@@ -1,0 +1,111 @@
+html[dir="rtl"] body {
+  font-family: 'Cairo', 'DM Sans', system-ui, sans-serif;
+}
+
+html[dir="rtl"] .sidebar {
+  left: auto;
+  right: 0;
+  border-right: none;
+  border-left: 1px solid var(--color-border);
+}
+
+html[dir="rtl"] .main-wrapper {
+  margin-left: 0;
+  margin-right: var(--sidebar-width);
+}
+
+html[dir="rtl"] .example-btn,
+html[dir="rtl"] .severity-meaning,
+html[dir="rtl"] .result-disclaimer,
+html[dir="rtl"] .question-text,
+html[dir="rtl"] .page-subtitle {
+  text-align: right;
+}
+
+html[dir="rtl"] .user-bubble {
+  border-bottom-right-radius: var(--radius-lg);
+  border-bottom-left-radius: 4px;
+}
+
+html[dir="rtl"] .assistant-bubble {
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: 4px;
+}
+
+html[dir="rtl"] .chat-input,
+html[dir="rtl"] .message-text {
+  text-align: right;
+}
+
+html[dir="rtl"] .source-header,
+html[dir="rtl"] .source-meta,
+html[dir="rtl"] .source-url {
+  direction: ltr;
+  text-align: left;
+}
+
+html[dir="rtl"] .message-row.user {
+  align-self: flex-start;
+}
+
+html[dir="rtl"] .message-row.assistant {
+  align-self: flex-end;
+}
+
+html[dir="rtl"] .scale-marker {
+  transform: translateX(-50%);
+}
+
+html[dir="rtl"] .question-card,
+html[dir="rtl"] .severity-meaning,
+html[dir="rtl"] .result-disclaimer,
+html[dir="rtl"] .crisis-alert {
+  text-align: right;
+}
+
+.lang-toggle {
+  display: flex;
+  gap: 0.25rem;
+  margin: 1rem 0.25rem 0;
+  padding: 0.2rem;
+  background: var(--color-surface-alt);
+  border-radius: 999px;
+}
+
+.mobile-header .lang-toggle {
+  margin: 0;
+}
+
+.lang-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.35rem 0.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.lang-btn.active {
+  background: var(--color-surface);
+  color: var(--color-primary-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 768px) {
+  html[dir="rtl"] .main-wrapper {
+    margin-right: 0;
+  }
+
+  .mobile-header {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
+
+  .mobile-nav {
+    flex-basis: 100%;
+  }
+}
