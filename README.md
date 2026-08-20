@@ -1,7 +1,8 @@
 # MindCare
 
 Evidence-based clinical RAG for depression guidelines.
-
+ Try the Demo : https://drive.google.com/file/d/1fIvZhUityVXnbLHLe6sSzsGQ6oJaPcg5/view?usp=drive_link
+ 
 MindCare answers questions from **WHO**, **NICE**, and **USPSTF** PDFs — not from model memory. Every supported claim is cited with `[n]`, linked back to the original guideline, and scored for confidence. The interface supports **English** and **Egyptian Arabic** (مصري). Retrieval always runs in English so the index stays faithful to the source documents.
 
 > **Not a diagnostic tool.** MindCare is educational. It is not a substitute for a clinician, and it does not provide a medical diagnosis.
